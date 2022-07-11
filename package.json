@@ -1,0 +1,16 @@
+{
+  "name": "bitmarketperu",
+  "version": "1.0.0",
+  "description": "exchange cryptocurrency",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cryptocurrency",
+    "exchange",
+    "peru"
+  ],
+  "author": "Jason Hernandez",
+  "license": "ISC"
+}
