@@ -1,20 +1,21 @@
 {
-  "name": "bitmarketperu",
+  "name": "started",
   "version": "1.0.0",
-  "description": "exchange cryptocurrency",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node .",
+    "dev": "cross-env NODE_ENV=development nodemon .",
+    "start": "cross-env NODE_ENV=production node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [
-    "cryptocurrency",
-    "exchange",
-    "peru"
-  ],
   "author": "Jason Hernandez",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.1"
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.19"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }
