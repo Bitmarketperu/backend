@@ -4,8 +4,10 @@ const routerApi = require('./network/routerApi');
 const path = require('path');
 require('./config_env.js');
 const connection = require('./configDB');
+const cors = require('cors');
 
 app.use(express.json());
+app.use(cors());
 
 connection();
 

@@ -23,7 +23,8 @@ const auth = wallet => {
                 return;
             }
            
-            const newUser = await addWallet(wallet);
+            const user = await store.addData();
+            const newUser = await addWallet(wallet, user._id);
 
             //crear token 
             const dataUser = jwt.sign({
@@ -31,7 +32,7 @@ const auth = wallet => {
             }, process.env.DATA_TOKEN, { expiresIn: '24h' });
      
             resolve({ 
-                message: "successfully added", 
+                message: "successfully added",  
                 token: dataUser
             });
 
@@ -46,21 +47,13 @@ const verify = (token) => {
     return new Promise( async (resolve, reject) => {
         try {
 
-            const decoded = await jwt.verify(token, 'secret');
-            const wallet = await store.get(decoded.data.name.toLowerCase());
+            const decoded = await jwt.verify(token, process.env.DATA_TOKEN);
+            const wallet = await store.get(decoded.data.wallet.toLowerCase());
 
-            if(!user) throw 'El usuario no existe';  
-
-            if(passCompare){
-                resolve({
-                id: user.id,
-                level: user.level,
-                saldo: user.saldo,
-                pay: user.pay
-                });
-            }else{
-                resolve(false);
-            }            
+            if(!wallet) throw 'user not found';
+        
+            resolve(false);
+                  
 
         } catch (error) {
             reject(error);
@@ -68,7 +61,7 @@ const verify = (token) => {
     });
 }
 
-const addWallet = async (wallet) => await store.add(wallet);
+const addWallet = async (wallet, user) => await store.add(wallet, user);
 const getUser = async (wallet) => await store.get(wallet);
 
 module.exports = {
