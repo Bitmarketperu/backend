@@ -15,6 +15,10 @@ const User = new Schema({
         type: Number,
         default: ""
     },
+    level: {
+        type: Number,
+        default: 0
+    },
     date: { 
         type: Date,
          default: Date.now 

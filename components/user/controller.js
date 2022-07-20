@@ -1,5 +1,19 @@
 const store = require('./store');
 
+const getAll = () => {
+    return new Promise( async (resolve, reject) => {
+        try {
+            
+            const users = await store.getAllUser();
+            resolve(users);
+
+        } catch (error) {
+            console.log(error)
+            reject(error);
+        }        
+    })
+};
+
 const setUser = (wallet, name, email, phone) => {
     return new Promise( async (resolve, reject) => {
         try {
@@ -30,5 +44,6 @@ const setUser = (wallet, name, email, phone) => {
 };
 
 module.exports = {
-    setUser
+    setUser,
+    getAll
 }
