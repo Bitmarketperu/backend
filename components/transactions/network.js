@@ -33,7 +33,7 @@ router.get('/:desde/:hasta', async (req, res) => {
 router.post('/', async (req, res) => {
     const { wallet, id, amountSend, amountReceive, moneySend, moneyReceive, network } = req.body;
     try {
-        if(!wallet || id || amountSend || amountReceive || moneySend || moneyReceive || network) throw "data invalida";
+        if(!wallet || !id || !amountSend || !amountReceive || !moneySend || !moneyReceive || !network) throw "data invalida";
         const responseController = await controller.addTransaction( wallet, id, amountSend, amountReceive, moneySend, moneyReceive, network );
         response.success(req, res, responseController, 200);
     } catch (error) {

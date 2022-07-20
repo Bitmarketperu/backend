@@ -4,9 +4,9 @@ const store = require('./store');
 const getUserTransaction = ( wallet, desde, hasta ) => {
     return new Promise( async (resolve, reject) => {
         try {
-
+            console.log(wallet, desde, hasta)
             desde = desde + "T00:00:00.000+00:00";
-            hasta + "T23:59:59.000+00:00";
+            hasta = hasta + "T23:59:59.000+00:00";
             const transactions = await store.getAllUser(wallet, desde, hasta);
      
             resolve(transactions);
@@ -24,7 +24,7 @@ const getALLTransaction = ( desde, hasta ) => {
         try {
 
             desde = desde + "T00:00:00.000+00:00";
-            hasta + "T23:59:59.000+00:00";
+            hasta = hasta + "T23:59:59.000+00:00";
             const transactions = await store.getAll(desde, hasta);
      
             resolve(transactions);
@@ -60,7 +60,7 @@ const setTransaction = ( transationId ) => {
     return new Promise( async (resolve, reject) => {
         try {
 
-            const transaction = await store.set(bankId);
+            const transaction = await store.set(transationId);
      
             resolve({
                 message: "Successfully Update",

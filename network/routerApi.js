@@ -3,6 +3,7 @@ const home = require('../components/home/network');
 const auth = require('../components/auth/network');
 const user = require('../components/user/network');
 const bank = require('../components/bank/network');
+const transactions = require('../components/transactions/network');
 
 
 const routerApi = app => {
@@ -12,6 +13,7 @@ const routerApi = app => {
     route.use('/auth', auth);
     route.use('/user', user);
     route.use('/bank', bank);
+    route.use('/transactions', transactions);
 }
 
 module.exports = routerApi;
