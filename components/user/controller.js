@@ -24,13 +24,11 @@ const getAll = () => {
     })
 };
 
-const setUser = (wallet, name, email, phone) => {
+const setUser = (_id, name, email, phone) => {
     return new Promise( async (resolve, reject) => {
         try {
-          
-            if(!wallet) throw 'Wallet no valida';  
             
-            const getUser = await store.get(wallet);
+            const getUser = await store.get(_id);
             if(!getUser) throw "User not found";
 
             const user = {
@@ -39,7 +37,7 @@ const setUser = (wallet, name, email, phone) => {
                 phone: phone
             }
 
-            const setUser = await store.set(wallet, user);
+            const setUser = await store.set(_id, user);
      
             resolve({ 
                 message: "successfully update",  
