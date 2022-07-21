@@ -4,7 +4,7 @@ const getBank = ( wallet ) => {
     return new Promise( async (resolve, reject) => {
         try {
 
-            const banks = await store.getBank(wallet);
+            const banks = await store.getBank(wallet.toLowerCase());
      
             resolve(banks);
 
@@ -40,7 +40,7 @@ const setBank = ( wallet ) => {
     return new Promise( async (resolve, reject) => {
         try {
 
-            const banks = await store.setBank(wallet);
+            const banks = await store.setBank(wallet.toLowerCase());
      
             resolve("Successfully Delete");
 
