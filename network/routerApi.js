@@ -4,6 +4,7 @@ const auth = require('../components/auth/network');
 const user = require('../components/user/network');
 const bank = require('../components/bank/network');
 const transactions = require('../components/transactions/network');
+const notification = require('../components/notification/network');
 
 
 const routerApi = app => {
@@ -14,6 +15,7 @@ const routerApi = app => {
     route.use('/user', user);
     route.use('/bank', bank);
     route.use('/transactions', transactions);
+    route.use('/notification', notification);
 }
 
 module.exports = routerApi;
