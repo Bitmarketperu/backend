@@ -5,7 +5,17 @@ const getAll = () => {
         try {
             
             const users = await store.getAllUser();
-            resolve(users);
+            const dataUser = users.map( u => {
+                return {
+                    wallet: u.wallet,
+                    _id: u.user._id,
+                    name: u.user.name,
+                    email: u.user.email,
+                    phone: u.user.phone,
+                    level: u.user.level
+                }
+            })
+            resolve(dataUser);
 
         } catch (error) {
             console.log(error)
