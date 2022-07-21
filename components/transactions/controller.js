@@ -37,11 +37,11 @@ const getALLTransaction = ( desde, hasta ) => {
 };
 
 //ADD TRANSLATIONS USER
-const addTransaction = ( wallet, id, amountSend, amountReceive, moneySend, moneyReceive, network ) => {
+const addTransaction = ( wallet, id, amountSend, amountReceive, moneySend, moneyReceive, network, status ) => {
     return new Promise( async (resolve, reject) => {
         try {
 
-            const transaction = await store.add( {wallet, id, amountSend, amountReceive, moneySend, moneyReceive, network} );
+            const transaction = await store.add( {wallet, id, amountSend, amountReceive, moneySend, moneyReceive, network, status} );
      
             resolve({ 
                 message: "successfully added",  
@@ -56,11 +56,11 @@ const addTransaction = ( wallet, id, amountSend, amountReceive, moneySend, money
 };
 
 //SET TRANSLATIONS USER
-const setTransaction = ( transationId ) => {
+const setTransaction = ( transationId, status ) => {
     return new Promise( async (resolve, reject) => {
         try {
 
-            const transaction = await store.set(transationId);
+            const transaction = await store.set(transationId, status);
      
             resolve({
                 message: "Successfully Update",

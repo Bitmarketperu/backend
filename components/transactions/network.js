@@ -31,10 +31,10 @@ router.get('/:desde/:hasta', async (req, res) => {
 
 //ADD TRANSLATIONS USER
 router.post('/', async (req, res) => {
-    const { wallet, id, amountSend, amountReceive, moneySend, moneyReceive, network } = req.body;
+    const { wallet, id, amountSend, amountReceive, moneySend, moneyReceive, network, status } = req.body;
     try {
-        if(!wallet || !id || !amountSend || !amountReceive || !moneySend || !moneyReceive || !network) throw "data invalida";
-        const responseController = await controller.addTransaction( wallet, id, amountSend, amountReceive, moneySend, moneyReceive, network );
+        if(!wallet || !id || !amountSend || !amountReceive || !moneySend || !moneyReceive || !network || !status) throw "data invalida";
+        const responseController = await controller.addTransaction( wallet, id, amountSend, amountReceive, moneySend, moneyReceive, network, status );
         response.success(req, res, responseController, 200);
     } catch (error) {
         console.log(error)
@@ -43,11 +43,11 @@ router.post('/', async (req, res) => {
 });
 
 //SET TRANSLATIONS USER
-router.put('/:transationId', async (req, res) => {
-    const { transationId } = req.params;
+router.put('/:transationId/:status', async (req, res) => {
+    const { transationId, status } = req.params;
     try {
         if(!transationId) throw "data invalida";
-        const responseController = await controller.setTransaction( transationId );
+        const responseController = await controller.setTransaction( transationId, status );
         response.success(req, res, responseController, 200);
     } catch (error) {
         response.error(req, res, error, 401);

@@ -7,7 +7,7 @@ const getUserTransaction = (wallet, desde, hasta) => Model.find({ wallet, date: 
 
 const getAllTransactions = (desde, hasta) => Model.find({date: {"$gte": desde, "$lt": hasta}}).exec();
 
-const setTransaction = _id => Model.findOneAndUpdate({ _id }, { status: 1}, { new: true})
+const setTransaction = (_id, status) => Model.findOneAndUpdate({ _id }, { status }, { new: true})
 
 module.exports = {
     add: addtransaction,
