@@ -24,11 +24,11 @@ const getAll = () => {
     })
 };
 
-const setUser = (_id, name, email, phone) => {
+const setUser = (wallet, _id, name, email, phone) => {
     return new Promise( async (resolve, reject) => {
         try {
             
-            const getUser = await store.get(_id);
+            const getUser = await store.get(wallet);
             if(!getUser) throw "User not found";
 
             const user = {

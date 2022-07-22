@@ -16,10 +16,10 @@ router.get('/', async (req, res) => {
 
 //UPDATE USER
 router.put('/', async (req, res) => {
-    const { _id, name, email, phone } = req.body;
+    const { wallet, _id, name, email, phone } = req.body;
     try {
-        if(!_id) throw "id invalid";
-        const responseController = await controller.setUser(_id, name, email, phone);
+        if(!_id || !wallet) throw "id invalid";
+        const responseController = await controller.setUser( wallet, _id, name, email, phone);
         response.success(req, res, responseController, 200);
     } catch (error) {
         console.log(error)
