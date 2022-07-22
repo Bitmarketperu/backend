@@ -12,7 +12,7 @@ const User = new Schema({
         default: ""
     },
     phone: {
-        type: Number,
+        type: String,
         default: ""
     },
     level: {
