@@ -4,10 +4,10 @@ const store = require('./store');
 const getConfig = () => {
     return new Promise( async (resolve, reject) => {
         try {
-           
+            
             const config = await store.get();
             resolve(config);
-
+            
         } catch (error) {
             console.log(error)
             reject(error);
@@ -16,11 +16,11 @@ const getConfig = () => {
 };
 
 //SET CONFIG
-const setConfig = ( dolOut, dolInp, solOut, solInp, maxSol, maxDol, limSol, limDol ) => {
+const setConfig = ( dolOut, dolInp, solOut, solInp, maxSol, maxDol, maxCrypto, limSol, limDol ) => {
     return new Promise( async (resolve, reject) => {
         try {
 
-            const config = await store.set( {dolOut, dolInp, solOut, solInp, maxSol, maxDol, limSol, limDol} );
+            const config = await store.set( {dolOut, dolInp, solOut, solInp, maxSol, maxDol, maxCrypto, limSol, limDol} );
      
             resolve({ 
                 message: "successfully update",  

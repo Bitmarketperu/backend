@@ -27,6 +27,10 @@ const Config = new Schema({
         type: Number,
         required: true
     },
+    maxCrypto: {
+        type: Number,
+        required: true
+    },
     limSol: {
         type: Number,
         required: true

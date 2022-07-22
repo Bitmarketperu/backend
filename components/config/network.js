@@ -16,10 +16,10 @@ router.get('/', async (req, res) => {
 
 //SET CONFIG
 router.put('/', async (req, res) => {
-    const { dolOut, dolInp, solOut, solInp, maxSol, maxDol, limSol, limDol } = req.body;
+    const { dolOut, dolInp, solOut, solInp, maxSol, maxDol, maxCrypto, limSol, limDol } = req.body;
     try {
         if(!dolOut || !dolInp || !solOut || !solInp || !maxSol || !maxDol || !limSol || !limDol) throw "data invalida";
-        const responseController = await controller.setConfig( dolOut, dolInp, solOut, solInp, maxSol, maxDol, limSol, limDol );
+        const responseController = await controller.setConfig( dolOut, dolInp, solOut, solInp, maxSol, maxDol, maxCrypto, limSol, limDol );
         response.success(req, res, responseController, 200);
     } catch (error) {
         console.log(error)
