@@ -28,7 +28,7 @@ const setUser = (wallet, _id, name, email, phone) => {
     return new Promise( async (resolve, reject) => {
         try {
             
-            const getUser = await store.get(wallet);
+            const getUser = await store.get(wallet.toLowerCase());
             if(!getUser) throw "User not found";
 
             const user = {
