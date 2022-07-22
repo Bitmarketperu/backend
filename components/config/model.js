@@ -15,7 +15,7 @@ const Config = new Schema({
         type: Number,
         required: true
     },
-    solInt: {
+    solInp: {
         type: Number,
         required: true
     },
