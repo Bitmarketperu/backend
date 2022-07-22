@@ -8,7 +8,6 @@ const auth = wallet => {
             if(!wallet) throw 'Wallet no valida';  
             
             const getWallet = await getUser(wallet);
-            
             if(getWallet){
 
                 //crear token 
@@ -19,14 +18,16 @@ const auth = wallet => {
                 resolve({
                     message: "Auth succes",
                     token: dataUser,
-                    _id: getWallet._id
+                    _id: getWallet.user._id,
+                    name: getWallet.user.name,
+                    email:getWallet.user.email,
+                    phone: getWallet.user.phone,
                 }); 
                 return;
             }
            
             const user = await store.addData();
             const newUser = await addWallet(wallet, user._id);
-
             //crear token 
             const dataUser = jwt.sign({
                 newUser
@@ -34,7 +35,11 @@ const auth = wallet => {
      
             resolve({ 
                 message: "successfully added",  
-                token: dataUser
+                token: dataUser,
+                _id: user._id,
+                name: user.name,
+                email:user.email,
+                phone: user.phone,
             });
 
         } catch (error) {
