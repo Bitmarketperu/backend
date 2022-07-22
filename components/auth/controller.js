@@ -18,7 +18,8 @@ const auth = wallet => {
 
                 resolve({
                     message: "Auth succes",
-                    token: dataUser
+                    token: dataUser,
+                    _id: getWallet._id
                 }); 
                 return;
             }
