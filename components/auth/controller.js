@@ -8,6 +8,9 @@ const auth = wallet => {
             if(!wallet) throw 'Wallet no valida';  
             
             const getWallet = await getUser(wallet);
+            const config = await store.getConfig();
+            const banks = await store.getBanksAdmin();
+
             if(getWallet){
 
                 //crear token 
@@ -22,6 +25,8 @@ const auth = wallet => {
                     name: getWallet.user.name,
                     email:getWallet.user.email,
                     phone: getWallet.user.phone,
+                    config,
+                    banks
                 }); 
                 return;
             }
@@ -40,6 +45,8 @@ const auth = wallet => {
                 name: user.name,
                 email:user.email,
                 phone: user.phone,
+                config,
+                banks
             });
 
         } catch (error) {
