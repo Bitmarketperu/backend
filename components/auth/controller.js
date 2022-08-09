@@ -9,7 +9,8 @@ const auth = wallet => {
             
             const getWallet = await getUser(wallet);
             const config = await store.getConfig();
-            const banks = await store.getBanksAdmin();
+            const banksAdmin = await store.getBanksAdmin();
+            const banksUser = await store.getBanksUser(wallet);
 
             if(getWallet){
 
@@ -26,7 +27,8 @@ const auth = wallet => {
                     email:getWallet.user.email,
                     phone: getWallet.user.phone,
                     config,
-                    banks
+                    banksAdmin,
+                    banksUser
                 }); 
                 return;
             }
@@ -46,7 +48,8 @@ const auth = wallet => {
                 email:user.email,
                 phone: user.phone,
                 config,
-                banks
+                banksAdmin,
+                banksUser
             });
 
         } catch (error) {
