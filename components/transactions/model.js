@@ -11,6 +11,11 @@ const Transactions = new Schema({
         type: String,
         required: true,
     },
+    bank: {
+        type: Schema.ObjectId,
+        ref: 'Bank',
+        required: true
+    },
     status: {
         type: Number,
         required: true,
