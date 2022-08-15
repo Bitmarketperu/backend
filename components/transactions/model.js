@@ -39,7 +39,7 @@ const Transactions = new Schema({
     network: {
         type: String,
         require: true
-    },
+    }, 
     date: { 
         type: Date,
         default: Date.now 

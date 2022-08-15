@@ -5,9 +5,14 @@ const path = require('path');
 require('./config_env.js');
 const connection = require('./configDB');
 const cors = require('cors');
+const http = require('http');
+const server = http.createServer(app);
 
 app.use(express.json());
 app.use(cors());
+
+const socket = require('./socket');
+socket.connect(server);
 
 connection();
 
@@ -18,4 +23,4 @@ app.use((req, res) => res.status(404).sendFile(path.join( __dirname, './public/4
 
 const port = process.env.PORT || 4000;
 
-app.listen( port, () => console.log(`App listening on port, ${port}`));
+server.listen( port, () => console.log(`App listening on port, ${port}`));

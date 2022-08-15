@@ -6,6 +6,7 @@ const bank = require('../components/bank/network');
 const transactions = require('../components/transactions/network');
 const notification = require('../components/notification/network');
 const config = require('../components/config/network');
+const chat = require('../components/chat/network');
 
 
 const routerApi = app => {
@@ -18,6 +19,7 @@ const routerApi = app => {
     route.use('/transactions', transactions);
     route.use('/notification', notification);
     route.use('/config', config);
+    route.use('/chat', chat);
 }
 
 module.exports = routerApi;
