@@ -13,8 +13,11 @@ const Transactions = new Schema({
     },
     bank: {
         type: Schema.ObjectId,
-        ref: 'Bank',
-        required: true
+        ref: 'Bank'
+    },
+    bankAdmin: {
+        type: Schema.ObjectId,
+        ref: 'Bank'
     },
     status: {
         type: Number,

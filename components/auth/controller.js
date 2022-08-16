@@ -82,5 +82,6 @@ const getUser = async (wallet) => await store.get(wallet);
 
 module.exports = {
     auth,
-    verify
+    verify,
+    getUser
 }
