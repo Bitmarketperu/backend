@@ -5,8 +5,9 @@ const getUserTransaction = ( wallet, desde, hasta ) => {
     return new Promise( async (resolve, reject) => {
         try {
             
-            desde = desde + "T00:00:00.000+00:00";
-            hasta = hasta + "T23:59:59.000+00:00";
+            desde = desde + "T05:00:00.000+00:00";
+            hasta = hasta + "T04:59:59.000+00:00";
+
             const transactions = await store.getAllUser(wallet, desde, hasta);
      
             resolve(transactions);
@@ -23,8 +24,8 @@ const getALLTransaction = ( desde, hasta ) => {
     return new Promise( async (resolve, reject) => {
         try {
 
-            desde = desde + "T00:00:00.000+00:00";
-            hasta = hasta + "T23:59:59.000+00:00";
+            desde = desde + "T05:00:00.000+00:00";
+            hasta = hasta + "T04:59:59.000+00:00";
             const transactions = await store.getAll(desde, hasta);
      
             resolve(transactions);
