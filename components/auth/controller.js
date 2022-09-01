@@ -26,6 +26,7 @@ const auth = wallet => {
                     name: getWallet.user.name,
                     email:getWallet.user.email,
                     phone: getWallet.user.phone,
+                    level: getWallet.user.level,
                     config,
                     banksAdmin,
                     banksUser
@@ -47,6 +48,7 @@ const auth = wallet => {
                 name: user.name,
                 email:user.email,
                 phone: user.phone,
+                level: getWallet.user.level,
                 config,
                 banksAdmin,
                 banksUser
