@@ -3,6 +3,22 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const Config = new Schema({
+    bitToPen: {
+        type: Number,
+        required: true
+    },
+    bitToUsd: {
+        type: Number,
+        required: true
+    },
+    penToBit: {
+        type: Number,
+        required: true
+    },
+    usdToBit: {
+        type: Number,
+        required: true
+    },
     dolOut: {
         type: Number,
         required: true
