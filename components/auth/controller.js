@@ -11,7 +11,7 @@ const auth = wallet => {
             const config = await store.getConfig();
             const banksAdmin = await store.getBanksAdmin();
             const banksUser = await store.getBanksUser(wallet);
-
+   
             if(getWallet){
 
                 //crear token 
@@ -27,6 +27,7 @@ const auth = wallet => {
                     email:getWallet.user.email,
                     phone: getWallet.user.phone,
                     level: getWallet.user.level,
+                    wallet: getWallet.wallet,
                     config,
                     banksAdmin,
                     banksUser
@@ -49,6 +50,7 @@ const auth = wallet => {
                 email:user.email,
                 phone: user.phone,
                 level: getWallet.user.level,
+                wallet: getWallet.wallet,
                 config,
                 banksAdmin,
                 banksUser

@@ -1,9 +1,10 @@
 const store = require('./store');
 
-const getBank = ( wallet ) => {
+const getBank = ( wallet, walletToken ) => {
     return new Promise( async (resolve, reject) => {
         try {
 
+            if(wallet.toLowerCase() != walletToken.toLowerCase()) throw "user no authorization";
             const banks = await store.getBank(wallet.toLowerCase());
      
             resolve(banks);
@@ -15,10 +16,11 @@ const getBank = ( wallet ) => {
     })
 };
 
-const addBank = ( wallet, name, titular, number, type, money ) => {
+const addBank = ( wallet, name, titular, number, type, money, walletToken ) => {
     return new Promise( async (resolve, reject) => {
         try {
             
+            if(walletToken.toLowerCase() != wallet.toLowerCase()) throw "User no authorization";
             const getUser = await store.get(wallet);
             if(!getUser) throw "User not found";
 
@@ -36,11 +38,12 @@ const addBank = ( wallet, name, titular, number, type, money ) => {
     })
 };
 
-const setBank = ( wallet ) => {
+const setBank = ( wallet, walletToken ) => {
     return new Promise( async (resolve, reject) => {
         try {
-
-            const banks = await store.setBank(wallet.toLowerCase());
+            console.log(walletToken.toLowerCase(), wallet.toLowerCase())
+            if(walletToken.toLowerCase() != wallet.toLowerCase()) throw "User no authorization";
+            await store.setBank(wallet.toLowerCase());
      
             resolve("Successfully Delete");
 

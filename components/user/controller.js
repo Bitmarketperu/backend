@@ -1,9 +1,12 @@
 const store = require('./store');
 
-const getAll = () => {
+const getAll = (level) => {
     return new Promise( async (resolve, reject) => {
         try {
             
+            //verify authorization
+            if(level != 1) throw 'No authorization';
+
             const users = await store.getAllUser();
             const dataUser = users.map( u => {
                 return {
@@ -18,16 +21,16 @@ const getAll = () => {
             resolve(dataUser);
 
         } catch (error) {
-            console.log(error)
             reject(error);
         }        
     })
 };
 
-const setUser = (wallet, _id, name, email, phone) => {
+const setUser = (wallet, _id, name, email, phone, userToken) => {
     return new Promise( async (resolve, reject) => {
         try {
             
+            if(userToken._id != _id) throw "User not authorization";
             const getUser = await store.get(wallet.toLowerCase());
             if(!getUser) throw "User not found";
 
@@ -45,7 +48,6 @@ const setUser = (wallet, _id, name, email, phone) => {
             });
 
         } catch (error) {
-            console.log(error)
             reject(error);
         }        
     })

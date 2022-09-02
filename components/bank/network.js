@@ -2,12 +2,15 @@ const express = require('express');
 const router = express.Router();
 const response = require('../../network/response');
 const controller = require('./controller');
+const validateToken = require('../../middlewares/validateToken');
 
-router.get('/:wallet', async (req, res) => {
+router.get('/:wallet', validateToken, async (req, res) => {
     const { wallet } = req.params;
     try {
-        if(!wallet) throw "data invalida";
-        const responseController = await controller.getBank( wallet );
+        if(!wallet) throw "data invalid";
+        if(!req.user?.wallet) throw "user data invalid";
+        const walletToken = req.user.wallet;
+        const responseController = await controller.getBank( wallet, walletToken );
         response.success(req, res, responseController, 200);
     } catch (error) {
         console.log(error)
@@ -15,11 +18,13 @@ router.get('/:wallet', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', validateToken, async (req, res) => {
     const { wallet, name, titular, number, type, money } = req.body;
     try {
+        if(Object.keys(req.user).length <= 0) throw "user data invalid";
         if(!wallet, !name, !titular, !number, !type, !money) throw "data invalida";
-        const responseController = await controller.addBank( wallet, name, titular, number, type, money );
+        const walletToken = req.user.wallet;
+        const responseController = await controller.addBank( wallet, name, titular, number, type, money, walletToken );
         response.success(req, res, responseController, 200);
     } catch (error) {
         console.log(error)
@@ -27,11 +32,13 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.put('/:wallet', async (req, res) => {
+router.put('/:wallet', validateToken, async (req, res) => {
     const { wallet } = req.params;
     try {
         if(!wallet) throw "data invalida";
-        const responseController = await controller.setBank( wallet );
+        if(Object.keys(req.user).length <= 0) throw "user data invalid";
+        const walletToken = req.user.wallet;
+        const responseController = await controller.setBank( wallet, walletToken );
         response.success(req, res, responseController, 200);
     } catch (error) {
         console.log(error)

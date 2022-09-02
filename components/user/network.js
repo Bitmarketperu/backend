@@ -2,11 +2,15 @@ const express = require('express');
 const router = express.Router();
 const response = require('../../network/response');
 const controller = require('./controller');
+const validateToken = require('../../middlewares/validateToken');
 
 //GET ALL USERS
-router.get('/', async (req, res) => {
+router.get('/', validateToken,  async (req, res) => {
+
     try {
-        const responseController = await controller.getAll();
+        if(!req.user?.level) throw 'Level Data invalid';
+        const { level } = req.user;
+        const responseController = await controller.getAll(level);
         response.success(req, res, responseController, 200);
     } catch (error) {
         console.log(error)
@@ -15,11 +19,14 @@ router.get('/', async (req, res) => {
 });
 
 //UPDATE USER
-router.put('/', async (req, res) => {
+router.put('/',validateToken, async (req, res) => {
     const { wallet, _id, name, email, phone } = req.body;
+
     try {
         if(!_id || !wallet) throw "id invalid";
-        const responseController = await controller.setUser( wallet, _id, name, email, phone);
+        if(!req.user?._id) throw "Token not found";
+        const userToken = req.user;
+        const responseController = await controller.setUser( wallet, _id, name, email, phone, userToken);
         response.success(req, res, responseController, 200);
     } catch (error) {
         console.log(error)
