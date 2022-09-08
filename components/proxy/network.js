@@ -1,11 +1,15 @@
 const express = require('express');
 const route = express.Router();
-const fetch = require('node-fetch');
+const controller = require('./controller');
 
 route.get('/', async (req, res) => {
-    const query = await fetch('https://ewforex.net/app/divisas');
-    const data = await query.json();
-    res.status(200).json(data);
+    try {
+        const responseController = await controller.get();
+        response.success(req, res, responseController, 200);
+    } catch (error) {
+        console.log(error)
+        response.error(req, res, error, 401);
+    }
 });
 
 module.exports = route;

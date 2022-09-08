@@ -38,11 +38,11 @@ const getALLTransaction = ( desde, hasta ) => {
 };
 
 //ADD TRANSLATIONS USER
-const addTransaction = ( wallet, id, bank, bankAdmin, amountSend, amountReceive, moneySend, moneyReceive, network, status ) => {
+const addTransaction = ( wallet, id, payMethod, bank, bankAdmin, amountSend, amountReceive, moneySend, moneyReceive, network, status ) => {
     return new Promise( async (resolve, reject) => {
         try {
 
-            const transaction = await store.add( {wallet, id, bank, bankAdmin, amountSend, amountReceive, moneySend, moneyReceive, network, status} );
+            const transaction = await store.add( {wallet, id, payMethod, bank, bankAdmin, amountSend, amountReceive, moneySend, moneyReceive, network, status} );
      
             resolve({ 
                 message: "successfully added",  

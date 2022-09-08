@@ -11,6 +11,10 @@ const Transactions = new Schema({
         type: String,
         required: true,
     },
+    payMethod: {
+        type: Object,
+        required: true,
+    },
     bank: {
         type: Schema.ObjectId,
         ref: 'Bank'
