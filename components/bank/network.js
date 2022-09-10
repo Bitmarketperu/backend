@@ -32,13 +32,13 @@ router.post('/', validateToken, async (req, res) => {
     }
 });
 
-router.put('/:wallet', validateToken, async (req, res) => {
-    const { wallet } = req.params;
+router.put('/:wallet/:idBank', validateToken, async (req, res) => {
+    const { wallet, idBank } = req.params;
     try {
-        if(!wallet) throw "data invalida";
+        if(!wallet || !idBank) throw "data invalida";
         if(Object.keys(req.user).length <= 0) throw "user data invalid";
         const walletToken = req.user.wallet;
-        const responseController = await controller.setBank( wallet, walletToken );
+        const responseController = await controller.setBank( wallet, walletToken, idBank );
         response.success(req, res, responseController, 200);
     } catch (error) {
         console.log(error)

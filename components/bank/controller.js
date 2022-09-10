@@ -38,12 +38,11 @@ const addBank = ( wallet, name, titular, number, type, money, walletToken ) => {
     })
 };
 
-const setBank = ( wallet, walletToken ) => {
+const setBank = ( wallet, walletToken, idBank ) => {
     return new Promise( async (resolve, reject) => {
         try {
-            console.log(walletToken.toLowerCase(), wallet.toLowerCase())
             if(walletToken.toLowerCase() != wallet.toLowerCase()) throw "User no authorization";
-            await store.setBank(wallet.toLowerCase());
+            await store.setBank(idBank);
      
             resolve("Successfully Delete");
 
