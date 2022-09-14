@@ -17,17 +17,17 @@ router.get('/:wallet/:desde/:hasta', async (req, res) => {
 });
 
 //GET TRANSLATIONS WITH ID
-router.get('/:wallet/:idTransaction', async (req, res) => {
-    const { wallet, idTransaction } = req.params;
-    try {
-        if(!wallet || !idTransaction) throw "data invalida";
-        const responseController = await controller.getTransactionId( wallet, idTransaction );
-        response.success(req, res, responseController, 200);
-    } catch (error) {
-        console.log(error)
-        response.error(req, res, error, 401);
-    }
-});
+// router.get('/:wallet/:idTransaction', async (req, res) => {
+//     const { wallet, idTransaction } = req.params;
+//     try {
+//         if(!wallet || !idTransaction) throw "data invalida";
+//         const responseController = await controller.getTransactionId( wallet, idTransaction );
+//         response.success(req, res, responseController, 200);
+//     } catch (error) {
+//         console.log(error)
+//         response.error(req, res, error, 401);
+//     }
+// });
 
 //GET ALL TRANSLATIONS USERS FOR ADMIN
 router.get('/:desde/:hasta', async (req, res) => {
