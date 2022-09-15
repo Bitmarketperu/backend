@@ -10,7 +10,7 @@ const getUserTransaction = ( wallet, desde, hasta ) => {
             // hasta = hasta + "T04:59:59.000+00:00";
             desde = desde + "T00:00:00";
             hasta = hasta + "T23:59:59";
-
+            
             const transactions = await store.getAllUser(wallet, desde, hasta); 
        
             resolve(transactions);
@@ -21,15 +21,13 @@ const getUserTransaction = ( wallet, desde, hasta ) => {
         }        
     })
 };
-//GET TRANSLATIONS WITH ID
-const getTransactionId = ( wallet, idTransaction) => {
+//GET TRANSLATIONS 10 LATES
+const getTransactionLates = () => {
     return new Promise( async (resolve, reject) => {
         try {
             
-            const transaction = await store.get(idTransaction);
-            //websocket
-            socket.io.emit('transaction', transaction);    
-            resolve(true);
+            const transaction = await store.getLates();   
+            resolve(transaction);
 
         } catch (error) {
             console.log(error)
@@ -103,7 +101,7 @@ const setTransaction = ( transationId, status ) => {
 
 module.exports = {
     getUserTransaction,
-    getTransactionId,
+    getTransactionLates,
     addTransaction,
     setTransaction,
     getALLTransaction

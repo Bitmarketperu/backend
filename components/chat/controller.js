@@ -8,7 +8,7 @@ const get = async (idTransaction) => {
             //websocket
             socket.io.emit('chat', chat);   
 
-            resolve(chat);
+            resolve(true);
         } catch (error) {
             reject(error);
         }

@@ -1,7 +1,7 @@
 const Model = require('./model');
 
 const addtransaction = transaction => Model(transaction).save();
-const getTransaction = _id => Model.find({ _id }).populate('bank');
+const getTransactionLates = () => Model.find({moneySend : "USDT"}).populate('bank').limit(10);
 
 const getUserTransaction = (wallet, desde, hasta) => Model.find({ wallet, date: {"$gte": desde, "$lt": hasta} }).populate('bank').populate('bankAdmin');
 
@@ -11,7 +11,7 @@ const setTransaction = (_id, status) => Model.findOneAndUpdate({ _id }, { status
 
 module.exports = {
     add: addtransaction,
-    get: getTransaction,
+    getLates: getTransactionLates,
     set: setTransaction,
     getAllUser: getUserTransaction,
     getAll: getAllTransactions
