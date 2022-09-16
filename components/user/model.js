@@ -19,15 +19,7 @@ const User = new Schema({
         type: Number,
         default: 0
     },
-    kycFd: {
-        type: Boolean,
-        default: false
-    },
-    kycFt: {
-        type: Boolean,
-        default: false
-    },
-    kycS: {
+    kyc: {
         type: Boolean,
         default: false
     },

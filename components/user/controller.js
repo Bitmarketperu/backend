@@ -54,14 +54,14 @@ const setUser = (wallet, _id, name, email, phone, userToken) => {
     })
 };
 
-const setUserKyc = (idUser, kycFd, kycFt, kycS, userToken) => {
+const setUserKyc = (idUser, kyc, userToken) => {
     return new Promise( async (resolve, reject) => {
         try {
             if(userToken.level != ID_ADMIN_LEVEL) throw "User not authorization";
             const getUser = await store.getUserId(idUser);
             if(!getUser) throw "User not found";
 
-            const user = { kycFd, kycFt, kycS }
+            const user = { kyc }
 
             const setUser = await store.set(idUser, user);
      

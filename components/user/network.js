@@ -36,13 +36,13 @@ router.put('/',validateToken, async (req, res) => {
 
 //UPDATE KYC USER
 router.put('/kyc',validateToken, async (req, res) => {
-    const { idUser, kycFd, kycFt, kycS } = req.body;
+    const { idUser, kyc } = req.body;
 
     try {
-        if(!idUser || !kycFd || !kycFt || !kycS) throw "id invalid";
+        if(!idUser || !kyc) throw "id invalid";
         if(!req.user?._id) throw "Token not found";
         const userToken = req.user;
-        const responseController = await controller.setUserKyc(idUser, kycFd, kycFt, kycS, userToken);
+        const responseController = await controller.setUserKyc(idUser, kyc, userToken);
         response.success(req, res, responseController, 200);
     } catch (error) {
         console.log(error)
