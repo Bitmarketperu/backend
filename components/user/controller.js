@@ -1,11 +1,12 @@
 const store = require('./store');
+const ID_ADMIN_LEVEL = 1;
 
 const getAll = (level) => {
     return new Promise( async (resolve, reject) => {
         try {
             
             //verify authorization
-            if(level != 1) throw 'No authorization';
+            if(level != ID_ADMIN_LEVEL) throw 'No authorization';
 
             const users = await store.getAllUser();
             const dataUser = users.map( u => {
@@ -53,7 +54,30 @@ const setUser = (wallet, _id, name, email, phone, userToken) => {
     })
 };
 
+const setUserKyc = (idUser, kycFd, kycFt, kycS, userToken) => {
+    return new Promise( async (resolve, reject) => {
+        try {
+            if(userToken.level != ID_ADMIN_LEVEL) throw "User not authorization";
+            const getUser = await store.getUserId(idUser);
+            if(!getUser) throw "User not found";
+
+            const user = { kycFd, kycFt, kycS }
+
+            const setUser = await store.set(idUser, user);
+     
+            resolve({ 
+                message: "successfully update",  
+                user: setUser
+            });
+
+        } catch (error) {
+            reject(error);
+        }        
+    })
+};
+
 module.exports = {
     setUser,
-    getAll
+    getAll,
+    setUserKyc
 }
