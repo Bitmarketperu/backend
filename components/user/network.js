@@ -20,29 +20,12 @@ router.get('/', validateToken,  async (req, res) => {
 
 //UPDATE USER
 router.put('/',validateToken, async (req, res) => {
-    const { wallet, _id, name, email, phone } = req.body;
-
+    const { wallet, _id, name, email, phone, kyc } = req.body;
     try {
         if(!_id || !wallet) throw "id invalid";
         if(!req.user?._id) throw "Token not found";
         const userToken = req.user;
-        const responseController = await controller.setUser( wallet, _id, name, email, phone, userToken);
-        response.success(req, res, responseController, 200);
-    } catch (error) {
-        console.log(error)
-        response.error(req, res, error, 401);
-    }
-});
-
-//UPDATE KYC USER
-router.put('/kyc',validateToken, async (req, res) => {
-    const { idUser, kyc } = req.body;
-
-    try {
-        if(!idUser || !kyc) throw "id invalid";
-        if(!req.user?._id) throw "Token not found";
-        const userToken = req.user;
-        const responseController = await controller.setUserKyc(idUser, kyc, userToken);
+        const responseController = await controller.setUser( wallet, _id, name, email, phone, kyc, userToken);
         response.success(req, res, responseController, 200);
     } catch (error) {
         console.log(error)

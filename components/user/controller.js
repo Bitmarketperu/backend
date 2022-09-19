@@ -16,7 +16,8 @@ const getAll = (level) => {
                     name: u.user.name,
                     email: u.user.email,
                     phone: u.user.phone,
-                    level: u.user.level
+                    level: u.user.level,
+                    kyc: u.user.kyc
                 }
             })
             resolve(dataUser);
@@ -27,11 +28,14 @@ const getAll = (level) => {
     })
 };
 
-const setUser = (wallet, _id, name, email, phone, userToken) => {
+const setUser = (wallet, _id, name, email, phone, kyc, userToken) => {
     return new Promise( async (resolve, reject) => {
         try {
             
-            if(userToken._id != _id) throw "User not authorization";
+            if(userToken.level != ID_ADMIN_LEVEL){
+                if(userToken._id != _id) throw "User not authorization";
+            }
+            
             const getUser = await store.get(wallet.toLowerCase());
             if(!getUser) throw "User not found";
 
@@ -41,29 +45,9 @@ const setUser = (wallet, _id, name, email, phone, userToken) => {
                 phone: phone
             }
 
+            if(kyc != 'undefined') user.kyc = kyc;
+        
             const setUser = await store.set(_id, user);
-     
-            resolve({ 
-                message: "successfully update",  
-                user: setUser
-            });
-
-        } catch (error) {
-            reject(error);
-        }        
-    })
-};
-
-const setUserKyc = (idUser, kyc, userToken) => {
-    return new Promise( async (resolve, reject) => {
-        try {
-            if(userToken.level != ID_ADMIN_LEVEL) throw "User not authorization";
-            const getUser = await store.getUserId(idUser);
-            if(!getUser) throw "User not found";
-
-            const user = { kyc }
-
-            const setUser = await store.set(idUser, user);
      
             resolve({ 
                 message: "successfully update",  
@@ -78,6 +62,5 @@ const setUserKyc = (idUser, kyc, userToken) => {
 
 module.exports = {
     setUser,
-    getAll,
-    setUserKyc
+    getAll
 }
