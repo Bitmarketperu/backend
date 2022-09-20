@@ -17,7 +17,7 @@ const auth = wallet => {
                 //crear token 
                 const dataUser = jwt.sign({
                     getWallet
-                }, process.env.DATA_TOKEN, { expiresIn: '0.02h' });
+                }, process.env.DATA_TOKEN, { expiresIn: '24h' });
 
                 resolve({
                     message: "Auth succes",
