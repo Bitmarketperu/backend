@@ -17,7 +17,7 @@ const auth = wallet => {
                 //crear token 
                 const dataUser = jwt.sign({
                     getWallet
-                }, process.env.DATA_TOKEN, { expiresIn: '24h' });
+                }, process.env.DATA_TOKEN, { expiresIn: '0.02h' });
 
                 resolve({
                     message: "Auth succes",
@@ -27,6 +27,7 @@ const auth = wallet => {
                     email:getWallet.user.email,
                     phone: getWallet.user.phone,
                     level: getWallet.user.level,
+                    kyc: getWallet.user.kyc,
                     wallet: getWallet.wallet,
                     config,
                     banksAdmin,
@@ -50,6 +51,7 @@ const auth = wallet => {
                 email:user.email,
                 phone: user.phone,
                 level: getWallet.user.level,
+                kyc: getWallet.user.kyc,
                 wallet: getWallet.wallet,
                 config,
                 banksAdmin,
@@ -67,12 +69,12 @@ const verify = (token) => {
     return new Promise( async (resolve, reject) => {
         try {
 
-            const decoded = await jwt.verify(token, process.env.DATA_TOKEN);
-            const wallet = await store.get(decoded.data.wallet.toLowerCase());
+            const decoded = jwt.verify(token, process.env.DATA_TOKEN);
+            const wallet = await store.get(decoded.getWallet.wallet.toLowerCase());
 
             if(!wallet) throw 'user not found';
         
-            resolve(false);
+            resolve(true);
                   
 
         } catch (error) {

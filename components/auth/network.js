@@ -27,4 +27,16 @@ router.get('/:wallet', async (req, res) => {
     }
 });
 
+router.get('/verify/:token', async (req, res) => {
+    const {token} = req.params;
+    try {
+        if(!token) throw "Token invalid";
+        const responseController = await controller.verify(token);
+        response.success(req, res, responseController, 200);
+    } catch (error) {
+        console.log(error)
+        response.error(req, res, error, 401);
+    }
+});
+
 module.exports = router;
