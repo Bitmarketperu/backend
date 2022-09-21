@@ -65,6 +65,13 @@ const addTransaction = ( wallet, id, payMethod, bank, bankAdmin, amountSend, amo
             let date = String(time.getFullYear()) + "-" + String(time.getMonth() + 1).padStart(2, '0') + "-" + String(time.getDate()).padStart(2, '0') + "T" + String(time.getHours()) + ":" + String(time.getMinutes()).padStart(2, '0');
             const transaction = await store.add( {wallet, id, payMethod, bank, bankAdmin, amountSend, amountReceive, moneySend, moneyReceive, network, status, date} );
             
+            let desde = String(time.getFullYear()) + "-" + String(time.getMonth() + 1).padStart(2, '0') + "-" + String(time.getDate()).padStart(2, '0') + "T00:00:00";
+            let hasta = String(time.getFullYear()) + "-" + String(time.getMonth() + 1).padStart(2, '0') + "-" + String(time.getDate()).padStart(2, '0') + "T23:59:59";
+            
+            const transactions = await store.getAll(desde, hasta);
+            //websocket
+            socket.io.emit('transactions', transactions);  
+
             resolve({ 
                 message: "successfully added",  
                 transaction
