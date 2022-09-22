@@ -17,11 +17,11 @@ const Transactions = new Schema({
     },
     bank: {
         type: Schema.ObjectId,
-        ref: 'Bank'
+        ref: 'Bank',
     },
     bankAdmin: {
         type: Schema.ObjectId,
-        ref: 'Bank'
+        ref: 'Bank',
     },
     status: {
         type: Number,
