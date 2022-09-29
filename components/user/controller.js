@@ -1,5 +1,6 @@
 const store = require('./store');
 const ID_ADMIN_LEVEL = 1;
+const schema =  require('../../middlewares/validateUser');
 
 const getAll = (level) => {
     return new Promise( async (resolve, reject) => {
@@ -29,6 +30,8 @@ const getAll = (level) => {
 };
 
 const setUser = (wallet, _id, name, email, phone, kyc, userToken) => {
+    const {error} = schema.validate({name, email, phone}); 
+    if (error) throw "Error en los datos del formulario";
     return new Promise( async (resolve, reject) => {
         try {
             

@@ -6,7 +6,6 @@ const validateToken = require('../../middlewares/validateToken');
 
 //GET ALL USERS
 router.get('/', validateToken,  async (req, res) => {
-
     try {
         if(!req.user?.level) throw 'Level Data invalid';
         const { level } = req.user;
