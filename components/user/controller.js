@@ -30,14 +30,15 @@ const getAll = (level) => {
 };
 
 const setUser = (wallet, _id, name, email, phone, kyc, userToken) => {
-    const {error} = schema.validate({name, email, phone}); 
-    if (error) throw "Error en los datos del formulario";
     return new Promise( async (resolve, reject) => {
         try {
             
             if(userToken.level != ID_ADMIN_LEVEL){
                 if(userToken._id != _id) throw "User not authorization";
             }
+
+            const {error} = schema.validate({name, email, phone}); 
+            if (error) throw "Error en los datos del formulario";
             
             const getUser = await store.get(wallet.toLowerCase());
             if(!getUser) throw "User not found";
