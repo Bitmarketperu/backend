@@ -15,6 +15,10 @@ const User = new Schema({
         type: String,
         default: ""
     },
+    dni: {
+        type: Number,
+        default: "",
+    },
     level: {
         type: Number,
         default: 0

@@ -7,7 +7,7 @@ const auth = wallet => {
           
             if(!wallet) throw 'Wallet no valida';  
             
-            const getWallet = await getUser(wallet);
+            let getWallet = await getUser(wallet);
             const config = await store.getConfig();
             const banksAdmin = await store.getBanksAdmin();
             const banksUser = await store.getBanksUser(wallet);
@@ -26,6 +26,7 @@ const auth = wallet => {
                     name: getWallet.user.name,
                     email:getWallet.user.email,
                     phone: getWallet.user.phone,
+                    dni: getWallet.user.dni,
                     level: getWallet.user.level,
                     kyc: getWallet.user.kyc,
                     wallet: getWallet.wallet,
@@ -42,6 +43,8 @@ const auth = wallet => {
             const dataUser = jwt.sign({
                 newUser
             }, process.env.DATA_TOKEN, { expiresIn: '24h' });
+
+            getWallet = await getUser(wallet); //again
      
             resolve({ 
                 message: "successfully added",  
@@ -50,6 +53,7 @@ const auth = wallet => {
                 name: user.name,
                 email:user.email,
                 phone: user.phone,
+                dni: user.dni,
                 level: getWallet.user.level,
                 kyc: getWallet.user.kyc,
                 wallet: getWallet.wallet,
@@ -70,7 +74,14 @@ const verify = (token) => {
         try {
 
             const decoded = jwt.verify(token, process.env.DATA_TOKEN);
-            const wallet = await store.get(decoded.getWallet.wallet.toLowerCase());
+            let walletUser;
+            if(decoded.getWallet?.wallet){
+                walletUser = decoded.getWallet.wallet;
+            }else{
+                walletUser = decoded.newUser.wallet;
+            }
+           
+            const wallet = await store.get(walletUser.toLowerCase());
 
             if(!wallet) throw 'user not found';
         

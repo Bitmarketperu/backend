@@ -17,6 +17,7 @@ const getAll = (level) => {
                     name: u.user.name,
                     email: u.user.email,
                     phone: u.user.phone,
+                    dni: u.user.dni,
                     level: u.user.level,
                     kyc: u.user.kyc
                 }
@@ -29,16 +30,15 @@ const getAll = (level) => {
     })
 };
 
-const setUser = (wallet, _id, name, email, phone, kyc, userToken) => {
+const setUser = (wallet, _id, name, email, phone, dni, kyc, userToken) => {
     return new Promise( async (resolve, reject) => {
         try {
-            
             if(userToken.level != ID_ADMIN_LEVEL){
-                if(userToken._id != _id) throw "User not authorization";
+                if(userToken.user != _id) throw "User not authorization";
             }
 
-            const {error} = schema.validate({name, email, phone}); 
-            if (error) throw "Error en los datos del formulario";
+            const {error} = schema.validate({name, email, phone, dni}); 
+            if (error) throw "Error en los datos del formulario", error;
             
             const getUser = await store.get(wallet.toLowerCase());
             if(!getUser) throw "User not found";
@@ -46,7 +46,8 @@ const setUser = (wallet, _id, name, email, phone, kyc, userToken) => {
             const user = {
                 name : name,
                 email: email,
-                phone: phone
+                phone: phone,
+                dni: dni
             }
 
             if(kyc != 'undefined') user.kyc = kyc;
