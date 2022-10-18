@@ -15,6 +15,9 @@ const Transactions = new Schema({
         type: Object,
         required: true,
     },
+    reciveMethod: {
+        type: String,
+    },
     bank: {
         type: Schema.ObjectId,
         ref: 'Bank',
