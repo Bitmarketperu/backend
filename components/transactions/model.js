@@ -18,6 +18,9 @@ const Transactions = new Schema({
     reciveUser: {
         type: String,
     },
+    reciveNetwork: {
+        type: String,
+    },
     reciveMethod: {
         type: String,
     },
