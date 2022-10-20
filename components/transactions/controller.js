@@ -25,7 +25,7 @@ const getUserTransaction = ( wallet, desde, hasta ) => {
 const getTransactionLates = () => {
     return new Promise( async (resolve, reject) => {
         try {
-            
+
             const transaction = await store.getLates();   
             resolve(transaction);
 
@@ -57,8 +57,9 @@ const getALLTransaction = ( desde, hasta ) => {
 };
 
 //ADD TRANSLATIONS USER
-const addTransaction = ( wallet, id, reciveUser, reciveNetwork, payMethod, reciveMethod, bank, bankAdmin, amountSend, amountReceive, moneySend, moneyReceive, network, status ) => {
+const addTransaction = ( wallet, id, amountSend, amountReceive, moneySend, moneyReceive, network, status, bankAdmin, bank, reciveUser, reciveNetwork, reciveMethod, payMethod  ) => {
     return new Promise( async (resolve, reject) => {
+    
         try {
 
             let time = new Date();
