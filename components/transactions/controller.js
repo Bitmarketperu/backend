@@ -12,7 +12,7 @@ const getUserTransaction = ( wallet, desde, hasta ) => {
             hasta = hasta + "T23:59:59";
             
             const transactions = await store.getAllUser(wallet, desde, hasta); 
-       
+        
             resolve(transactions);
 
         } catch (error) {
