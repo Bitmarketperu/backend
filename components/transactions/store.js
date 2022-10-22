@@ -1,7 +1,7 @@
 const Model = require('./model');
 
 const addtransaction = transaction => Model(transaction).save();
-const getTransactionLates = () => Model.find({moneySend : "Tether"}).populate('bank').sort({ date: -1}).limit(10);
+const getTransactionLates = () => Model.find({moneySend : "Tether", moneyReceive : "Soles" }).populate('bank').sort({ date: -1}).limit(10);
 
 const getUserTransaction = (wallet, desde, hasta) => Model.find({ wallet, date: {"$gte": desde, "$lt": hasta} }).populate('bank').populate('bankAdmin');
 
