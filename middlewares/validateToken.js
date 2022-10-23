@@ -4,7 +4,6 @@ const validateToken = (req, res, next)  => {
         req.user = {};
         const authorization = req.headers.authorization || '';
         authorization.replace('"');
-        
         try {
             if(authorization.includes('Bearer')){
                 const token = authorization.slice(7);

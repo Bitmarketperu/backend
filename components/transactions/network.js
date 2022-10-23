@@ -43,10 +43,10 @@ router.get('/:desde/:hasta', async (req, res) => {
 //ADD TRANSLATIONS USER
 router.post('/', async (req, res) => {
 
-    const { wallet, id, amountSend, amountReceive, moneySend, moneyReceive, network, status, bankAdmin, bank, reciveUser, reciveNetwork, reciveMethod, payMethod  } = req.body;
-
+    const { wallet, id, amountSend, amountReceive, moneySend, moneyReceive, network, status, bankAdmin, bank, reciveUser, reciveNetwork, reciveMethod, payMethod } = req.body;
+   
     try {
-        if(!wallet || !id || !payMethod || !bank || !bankAdmin || !amountSend || !amountReceive || !moneySend || !moneyReceive || !network || !status) throw "data invalida";
+        if(!wallet || !id || !amountSend || !amountReceive || !moneySend || !moneyReceive || !network ||  !status || !bankAdmin || !bank || !reciveUser || !reciveNetwork || !reciveMethod || !payMethod) throw "data invalida";
         const responseController = await controller.addTransaction(wallet, id, amountSend, amountReceive, moneySend, moneyReceive, network, status, bankAdmin, bank, reciveUser, reciveNetwork, reciveMethod, payMethod );
         response.success(req, res, responseController, 200);
     } catch (error) {
