@@ -20,7 +20,6 @@ router.get('/', validateToken,  async (req, res) => {
 //UPDATE USER
 router.put('/',validateToken, async (req, res) => {
     const { wallet, _id, name, email, phone, dni, kyc } = req.body;
-
     try {
         if(!_id || !wallet) throw "id invalid";
         if(!req.user?._id) throw "Token not found";
