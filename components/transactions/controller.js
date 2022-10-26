@@ -90,9 +90,16 @@ const setTransaction = ( transationId, status ) => {
         try {
 
             const transaction = await store.set(transationId, status);
+
+            let time = new Date();
+            
+            let desde = String(time.getFullYear()) + "-" + String(time.getMonth() + 1).padStart(2, '0') + "-" + String(time.getDate()).padStart(2, '0') + "T00:00:00";
+            let hasta = String(time.getFullYear()) + "-" + String(time.getMonth() + 1).padStart(2, '0') + "-" + String(time.getDate()).padStart(2, '0') + "T23:59:59";
+
+            const transactions = await store.getAll(desde, hasta);
             
             //websocket
-            socket.io.emit('transaction', transaction);   
+            socket.io.emit('transactions', transactions);   
      
             resolve({
                 message: "Successfully Update",
