@@ -59,6 +59,14 @@ const Transactions = new Schema({
     date: { 
         type: Date,
         require: true
+    },
+    origen: { 
+        type: String,
+        Default: ''
+    },
+    politico: { 
+        type: String,
+        Default: ''
     }
 });
 

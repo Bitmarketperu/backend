@@ -56,14 +56,14 @@ const getALLTransaction = ( desde, hasta ) => {
 };
 
 //ADD TRANSLATIONS USER
-const addTransaction = ( wallet, id, amountSend, amountReceive, moneySend, moneyReceive, network, status, bankAdmin, bank, reciveUser, reciveNetwork, reciveMethod, payMethod  ) => {
+const addTransaction = ( wallet, id, amountSend, amountReceive, moneySend, moneyReceive, network, status, bankAdmin, bank, reciveUser, reciveNetwork, reciveMethod, payMethod, origen, politico ) => {
     return new Promise( async (resolve, reject) => {
     
         try {
 
             let time = new Date();
             let date = String(time.getFullYear()) + "-" + String(time.getMonth() + 1).padStart(2, '0') + "-" + String(time.getDate()).padStart(2, '0') + "T" + String(time.getHours()).padStart(2, '0') + ":" + String(time.getMinutes()).padStart(2, '0');
-            const transaction = await store.add( {wallet, id, reciveUser, payMethod, reciveMethod, reciveNetwork, bank, bankAdmin, amountSend, amountReceive, moneySend, moneyReceive, network, status, date} );
+            const transaction = await store.add({ wallet, id, reciveUser, payMethod, reciveMethod, reciveNetwork, bank, bankAdmin, amountSend, amountReceive, moneySend, moneyReceive, network, status, date, origen, politico });
             
             let desde = String(time.getFullYear()) + "-" + String(time.getMonth() + 1).padStart(2, '0') + "-" + String(time.getDate()).padStart(2, '0') + "T00:00:00";
             let hasta = String(time.getFullYear()) + "-" + String(time.getMonth() + 1).padStart(2, '0') + "-" + String(time.getDate()).padStart(2, '0') + "T23:59:59";
