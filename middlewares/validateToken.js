@@ -1,25 +1,18 @@
 const jwt = require('jsonwebtoken');
+const response = require('../network/response');
 
 const validateToken = (req, res, next)  => {
         req.user = {};
         const authorization = req.headers.authorization || '';
+   
         authorization.replace('"');
         try {
             if(authorization.includes('Bearer')){
                 const token = authorization.slice(7);
                 
                 jwt.verify(token, process.env.DATA_TOKEN, (err, decoded) => {
-                    if(err){
-                        throw 'Error token';
-                    }else{
-                        if(decoded.getWallet?.user){
-                            req.user = decoded.getWallet.user;
-                            req.user.wallet = decoded.getWallet.wallet;
-                        }else{
-                            req.user = decoded.newUser;
-                            req.user.wallet = decoded.newUser.wallet;
-                        }
-                    }
+                    if(err) throw 'Error token';
+                    req.auth = true;
                     next();
                 });
             }else{
@@ -27,7 +20,7 @@ const validateToken = (req, res, next)  => {
             }
         } catch (error) {
             console.log(error);
-            next();
+            response.error(req, res, error, 401);
         }
         
 } 

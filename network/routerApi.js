@@ -1,6 +1,7 @@
 const express = require('express');
 const home = require('../components/home/network');
 const auth = require('../components/auth/network');
+const login = require('../components/login/network');
 const user = require('../components/user/network');
 const bank = require('../components/bank/network');
 const transactions = require('../components/transactions/network');
@@ -15,6 +16,7 @@ const routerApi = app => {
     app.use('/api/v1/', route);
     route.use('/home', home);
     route.use('/auth', auth);
+    route.use('/login', login);
     route.use('/user', user);
     route.use('/bank', bank);
     route.use('/transactions', transactions);

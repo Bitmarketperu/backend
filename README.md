@@ -18,10 +18,7 @@ Carácteristicas:
 |--|--|--|
 | / | GET | false |
 | /login | GET | false |
-| /signup | GET | false |
-| /transactions | GET | true |
-| /profile | GET | true |
-| /swap | GET | false |
+
 
 # Backend
 ## Routes 
@@ -67,3 +64,21 @@ Carácteristicas:
 
 
   Node version: v16.16.0
+
+  # Config Data Base
+  models configs
+    ```
+    {
+      "dolOut": 3,
+      "dolInp": 3,
+      "solOut": 2,
+      "solInp": 3,
+      "maxSol": 10000,
+      "maxDol": 1000,
+      "limSol": 40000,
+      "limDol": 15000,
+      "maxCrypto": 4000,
+      "sellBit": 3.5,
+      "buyBit": 2.5
+    }
+    ```

@@ -1,15 +1,16 @@
-// auth wallet
+// auth login
 
 const express = require('express');
 const router = express.Router();
 const response = require('../../network/response');
 const controller = require('./controller');
+const validateToken = require('../../middlewares/validateToken');
 
 router.post('/', async (req, res) => {
-    const {wallet} = req.body;
+    const {email, password} = req.body;
     try {
-        if(!wallet) throw "Wallet invalida";
-        const responseController = await controller.auth(wallet.toLowerCase());
+        if(!email || !password) throw "datos invalidos";
+        const responseController = await controller.auth({email, password});
         response.success(req, res, responseController, 200);
     } catch (error) {
         console.log(error)
@@ -17,24 +18,22 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.get('/:wallet', async (req, res) => {
-    const {wallet} = req.params;
+router.post('/login', async (req, res) => {
+    const {email, password} = req.body;
     try {
-        if(!wallet) throw "Wallet invalida";
-        const responseController = await controller.getUser(wallet.toLowerCase());
+        if(!email || !password) throw "datos invalidos";
+        const responseController = await controller.login(email,password);
         response.success(req, res, responseController, 200);
     } catch (error) {
-        console.log(error)
+        console.log(error);
         response.error(req, res, error, 401);
     }
 });
 
-router.get('/verify/:token', async (req, res) => {
-    const {token} = req.params;
+router.get('/verify/', validateToken, async (req, res) => {
     try {
-        if(!token) throw "Token invalid";
-        const responseController = await controller.verify(token);
-        response.success(req, res, responseController, 200);
+        const auth = req.auth = true; // auth success
+        response.success(req, res, auth, 200);
     } catch (error) {
         console.log(error)
         response.error(req, res, error, 401);
