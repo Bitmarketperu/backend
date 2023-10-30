@@ -1,7 +1,7 @@
 const store = require('./store');
 const jwt = require('jsonwebtoken');
 
-const auth = ({email, password}) => {
+const auth = ({email, password, name, dni, phone}) => {
     return new Promise( async (resolve, reject) => {
         try {
             
@@ -15,7 +15,7 @@ const auth = ({email, password}) => {
                 return;
             }
            
-            const newUser = await addUser(email, password);
+            const newUser = await addUser(email, password, name, dni, phone);
             //crear token 
             const dataUser = jwt.sign({
                 newUser
@@ -82,7 +82,7 @@ const login = (email, password) => {
 }
 
 
-const addUser = async (email, password) => await store.add(email, password);
+const addUser = async (email, password, name, dni, phone) => await store.add(email, password, name, dni, phone);
 const getUser = async (email) => await store.get(email);
 
 module.exports = {

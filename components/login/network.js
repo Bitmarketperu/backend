@@ -7,10 +7,12 @@ const controller = require('./controller');
 const validateToken = require('../../middlewares/validateToken');
 
 router.post('/', async (req, res) => {
-    const {email, password} = req.body;
+
+    //recibir nombre y documento 
+    const {email, password, name, dni, phone} = req.body;
     try {
-        if(!email || !password) throw "datos invalidos";
-        const responseController = await controller.auth({email, password});
+        if(!phone || !email || !password || !name || !dni) throw "datos invalidos";
+        const responseController = await controller.auth({email, password, name, dni, phone});
         response.success(req, res, responseController, 200);
     } catch (error) {
         console.log(error)
