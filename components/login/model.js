@@ -20,6 +20,18 @@ const Wallet = new Schema({
     date: { 
         type: Date,
          default: Date.now 
+    },
+    name:{
+        type:String,
+        require:true
+    },
+    dni:{
+        type:String,
+        require:true
+    },
+    phone:{
+        type:String,
+        require:true
     }
 });
 
