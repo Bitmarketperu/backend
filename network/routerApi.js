@@ -9,6 +9,7 @@ const notification = require('../components/notification/network');
 const config = require('../components/config/network');
 const chat = require('../components/chat/network');
 const proxy = require('../components/proxy/network');
+const email = require('../components/email/network');
 
 
 const routerApi = app => {
@@ -24,6 +25,7 @@ const routerApi = app => {
     route.use('/config', config);
     route.use('/chat', chat);
     route.use('/proxy', proxy);
+    route.use('/email',email);
 }
 
 module.exports = routerApi;
