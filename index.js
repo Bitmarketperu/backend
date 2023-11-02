@@ -8,10 +8,11 @@ const cors = require('cors');
 const http = require('http');
 const server = http.createServer(app);
 var morgan = require('morgan')
-morgan('tiny')
+
 
 app.use(express.json());
 app.use(cors());
+app.use(morgan('tiny'));
 
 const socket = require('./socket');
 socket.connect(server);
