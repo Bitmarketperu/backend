@@ -1,4 +1,5 @@
 const store = require('./store');
+const authStore = require('../auth/store')
 const jwt = require('jsonwebtoken');
 
 const auth = ({email, password, name, dni, phone}) => {
@@ -48,7 +49,7 @@ const login = (email, password) => {
 
             email = email.toLowerCase().trim();
             const user = await getUser(email);
-
+            console.log(user)
             if(!email) throw 'Usuario no encontrado';
          
             if(password !== user.password)  throw 'Contraseña invalida';
@@ -60,8 +61,14 @@ const login = (email, password) => {
                 phone: user.phone,
                 dni: user.dni,
                 level: user.level,
-                kyc: user.kyc
+                kyc: user.kyc,
+                _id:user._id
             }, process.env.DATA_TOKEN, { expiresIn: '24h' });
+
+
+            const config = await authStore.getConfig()
+
+            console.log("Encontrado el config: ",config)
         
             resolve({ 
                 message: "successfully",  
@@ -69,6 +76,7 @@ const login = (email, password) => {
                 email:user.email,
                 level: user.level,
                 kyc: user.kyc,
+                config
                 // wallet: checkUser.wallet,
                 // config,
                 // banksAdmin,

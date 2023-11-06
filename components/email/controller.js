@@ -1,18 +1,20 @@
 const nodemailer = require("nodemailer")
 
-const post = (req) => {
+const loadImages = (files) => {
 
-    const { originalname, path } = req.file
+    console.log(files)
+
+    /* const { originalname, path } = req.file
     const pass = process.env.APPLICATION_PASS_GMAIL_MANUEL
     const user = 'manuelperez.0000@gmail.com'
     const service = 'gmail'
     const auth = { user, pass }
-    const transportData = { service, auth }
+    const transportData = { service, auth } */
 
     return new Promise(async (resolve, reject) => {
         try {
 
-            var transporter = nodemailer.createTransport(transportData)
+           /*  var transporter = nodemailer.createTransport(transportData)
 
             const mailOptions = {
                 from: "sender@example.com",
@@ -25,10 +27,11 @@ const post = (req) => {
                         path,
                     }
                 ]
-            }
+            } */
 
+            /*
             const result = await transporter.sendMail(mailOptions);
-            /* console.log('Correo enviado:', result);
+             console.log('Correo enviado:', result);
             console.log("Message sent: %s", info.messageId) */
             resolve({
                 message: "successfully"
@@ -41,5 +44,5 @@ const post = (req) => {
 }
 
 module.exports = {
-    post
+    loadImages
 }
