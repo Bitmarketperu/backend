@@ -13,10 +13,11 @@ router.get('/:idTransaction', async (req, res) => {
         console.log(error)
         response.error(req, res, error, 401);
     }
-});
+})
 
 router.post('/', async (req, res) => {
     const { idTransaction, description, idUser } = req.body;
+    console.log(req.body)
     try {
         if(!idTransaction || !description || !idUser) throw "data invalida";
         const responseController = await controller.save( idTransaction, description, idUser );
@@ -25,7 +26,7 @@ router.post('/', async (req, res) => {
         console.log(error)
         response.error(req, res, error, 401);
     }
-});
+})
 
 
 module.exports = router;

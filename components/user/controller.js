@@ -3,6 +3,8 @@ const ID_ADMIN_LEVEL = 1;
 const schema =  require('../../middlewares/validateUser');
 
 const getAll = (level) => {
+
+    console.log('user level: ===>',level)
     return new Promise( async (resolve, reject) => {
         try {
             
@@ -10,7 +12,7 @@ const getAll = (level) => {
             if(level != ID_ADMIN_LEVEL) throw 'No authorization';
 
             const users = await store.getAllUser();
-            const dataUser = users.map( u => {
+            /* const dataUser = users.map( u => {
                 return {
                     wallet: u.wallet,
                     _id: u.user._id,
@@ -21,8 +23,8 @@ const getAll = (level) => {
                     level: u.user.level,
                     kyc: u.user.kyc
                 }
-            })
-            resolve(dataUser);
+            }) */
+            resolve(users);
 
         } catch (error) {
             reject(error);

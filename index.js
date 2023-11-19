@@ -9,7 +9,6 @@ const http = require('http');
 const server = http.createServer(app);
 var morgan = require('morgan')
 
-
 app.use(express.json());
 app.use(cors());
 app.use(morgan('tiny'));

@@ -4,13 +4,15 @@ const response = require('../../network/response');
 const controller = require('./controller');
 const validateToken = require('../../middlewares/validateToken');
 
-router.get('/:wallet', validateToken, async (req, res) => {
-    const { wallet } = req.params;
+router.get('/:dni', validateToken, async (req, res) => {
+    const { dni } = req.params;
     try {
-        if(!wallet) throw "data invalid";
-        if(!req.user?.wallet) throw "user data invalid";
-        const walletToken = req.user.wallet;
-        const responseController = await controller.getBank( wallet, walletToken );
+        if (!dni) throw "data invalid";
+        if (!req.user?.dni) throw "user data invalid";
+        const dniToken = req.user.dni;
+        /* console.log('DNITOKEN===>', dniToken)
+        console.log('DNI===>', dni) */
+        const responseController = await controller.getBank(dni, dniToken);
         response.success(req, res, responseController, 200);
     } catch (error) {
         console.log(error)
@@ -18,27 +20,42 @@ router.get('/:wallet', validateToken, async (req, res) => {
     }
 });
 
-router.post('/', validateToken, async (req, res) => {
-    const { wallet, name, titular, number, type, money } = req.body;
+/* router.post('/', validateToken, async (req, res) => {
+    const { dni, name, titular, number, type, money } = req.body;
     try {
         if(Object.keys(req.user).length <= 0) throw "user data invalid";
-        if(!wallet, !name, !titular, !number, !type, !money) throw "data invalida";
-        const walletToken = req.user.wallet;
-        const responseController = await controller.addBank( wallet, name, titular, number, type, money, walletToken );
+        if(!dni, !name, !titular, !number, !type, !money) throw "data invalida";
+        const dniToken = req.user.dni;
+        const responseController = await controller.addBank( dni, name, titular, number, type, money, dniToken );
         response.success(req, res, responseController, 200);
     } catch (error) {
         console.log(error)
         response.error(req, res, error, 401);
     }
-});
+}); */
 
-router.put('/:wallet/:idBank', validateToken, async (req, res) => {
-    const { wallet, idBank } = req.params;
+router.post('/', validateToken,async (req, res) => {
+    const { dni, name, titular, number, type, money } = req.body;
+    console.log(req.body)
     try {
-        if(!wallet || !idBank) throw "data invalida";
-        if(Object.keys(req.user).length <= 0) throw "user data invalid";
-        const walletToken = req.user.wallet;
-        const responseController = await controller.setBank( wallet, walletToken, idBank );
+        if (Object.keys(req.user).length <= 0) throw "user data invalid";
+        if (!dni, !name, !titular, !number, !type, !money) throw "Invalid Data incompleted";
+        const dniToken = req.user.dni;
+        const responseController = await controller.addBank(dni, name, titular, number, type, money, dniToken);
+        response.success(req, res, responseController, 200);
+    } catch (error) {
+        console.log(error)
+        response.error(req, res, error, 401);
+    }
+})
+
+router.put('/:dni/:idBank', validateToken, async (req, res) => {
+    const { dni, idBank } = req.params;
+    try {
+        if (!dni || !idBank) throw "data invalida";
+        if (Object.keys(req.user).length <= 0) throw "user data invalid";
+        const dniToken = req.user.dni;
+        const responseController = await controller.setBank(dni, dniToken, idBank);
         response.success(req, res, responseController, 200);
     } catch (error) {
         console.log(error)

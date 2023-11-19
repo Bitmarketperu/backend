@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 const Bank = new Schema({
     wallet: {
         type: String,
-        required: true,
+        required: false,
     },
     name: {
         type: String,

@@ -26,7 +26,7 @@ const Wallet = new Schema({
         require:true
     },
     dni:{
-        type:String,
+        type:Number,
         require:true
     },
     phone:{

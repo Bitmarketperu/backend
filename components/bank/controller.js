@@ -1,13 +1,15 @@
 const store = require('./store');
 const schema =  require('../../middlewares/validateBank');
 
-const getBank = ( wallet, walletToken ) => {
+const getBank = ( dni, dniToken ) => {
     return new Promise( async (resolve, reject) => {
         try {
+           /*  console.log('DNI:',dni)
+            console.log('DNITOKEN:',dniToken) */
 
-            if(wallet.toLowerCase() != walletToken.toLowerCase()) throw "user no authorization";
-            const banks = await store.getBank(wallet.toLowerCase());
-     
+            if(dni!= dniToken) throw "user no authorization";
+            const banks = await store.getBank(dni.toLowerCase());
+            
             resolve(banks);
 
         } catch (error) {
@@ -17,18 +19,21 @@ const getBank = ( wallet, walletToken ) => {
     })
 };
 
-const addBank = ( wallet, name, titular, number, type, money, walletToken ) => {
+const addBank = ( dni, name, titular, number, type, money, dniToken ) => {
     return new Promise( async (resolve, reject) => {
         try {
-            
-            if(walletToken.toLowerCase() != wallet.toLowerCase()) throw "User no authorization";
-            const getUser = await store.get(wallet);
+            if(dniToken != dni) {
+                console.log("Usuario no autorizado")
+                throw "User no authorization";
+            }
+
+            const getUser = await store.get(dni);
             if(!getUser) throw "User not found";
 
             const {error} = schema.validate({titular, number}); 
             if (error) throw "Error en los datos del formulario";
 
-            const newBank = await store.add( {wallet, name, titular, number, type, money} );
+            const newBank = await store.add( {dni, name, titular, number, type, money} );
      
             resolve({ 
                 message: "successfully added",  
@@ -42,17 +47,18 @@ const addBank = ( wallet, name, titular, number, type, money, walletToken ) => {
     })
 };
 
-const setBank = ( wallet, walletToken, idBank ) => {
+const setBank = ( dni, dniToken, idBank ) => {
     return new Promise( async (resolve, reject) => {
         try {
-            if(walletToken.toLowerCase() != wallet.toLowerCase()) throw "User no authorization";
-            await store.setBank(idBank);
+            if(dniToken != dni) throw "User no authorization";
+            await store.setBank(idBank)
      
-            resolve("Successfully Delete");
+            resolve("Successfully Delete")
 
         } catch (error) {
+            console.log('No se pudo eliminar el banco')
             console.log(error)
-            reject(error);
+            reject(error)
         }        
     })
 };

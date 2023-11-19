@@ -4,11 +4,11 @@ const get = () => {
     return new Promise(async (resolve, reject) => {
         try {
 
-            /* const query = await fetch('https://ewforex.net/app/divisas');
+            const query = await fetch('https://ewforex.net/app/divisas');
 
             const data = await query.json();
-            resolve(data); */
-            resolve(0)
+            resolve(data);
+            /* resolve(0) */
 
         } catch (error) {
             console.log(error)
@@ -16,7 +16,7 @@ const get = () => {
         }
     })
 };
-
+ 
 module.exports = {
     get
 }

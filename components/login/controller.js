@@ -12,8 +12,8 @@ const auth = ({email, password, name, dni, phone}) => {
             if(checkUser){
                 resolve({
                     error: "El correo electrónico ya existe!",
-                }); 
-                return;
+                })
+                return
             }
            
             const newUser = await addUser(email, password, name, dni, phone);
@@ -49,13 +49,15 @@ const login = (email, password) => {
 
             email = email.toLowerCase().trim();
             const user = await getUser(email);
-            console.log(user)
+            
             if(!email) throw 'Usuario no encontrado';
          
             if(password !== user.password)  throw 'Contraseña invalida';
+            
+            const config = await authStore.getConfig()
 
             //crear token 
-            const dataUser = jwt.sign({
+            const token = jwt.sign({
                 name: user.name,
                 email: user.email,
                 phone: user.phone,
@@ -65,22 +67,19 @@ const login = (email, password) => {
                 _id:user._id
             }, process.env.DATA_TOKEN, { expiresIn: '24h' });
 
-
-            const config = await authStore.getConfig()
-
-            console.log("Encontrado el config: ",config)
+            console.log(user.dni)
         
             resolve({ 
                 message: "successfully",  
-                token: dataUser,
+                token,
+                config,
                 email:user.email,
                 level: user.level,
                 kyc: user.kyc,
-                config
-                // wallet: checkUser.wallet,
-                // config,
-                // banksAdmin,
-                // banksUser
+                dni:user.dni,
+                name:user.name,
+                phone:user.phone,
+                _id:user._id
             }); 
 
         } catch (error) {
