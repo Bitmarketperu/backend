@@ -10,7 +10,7 @@ const config = require('../components/config/network');
 const chat = require('../components/chat/network');
 const proxy = require('../components/proxy/network');
 const email = require('../components/email/network');
-
+const upload = require('../components/upload/network');
 
 const routerApi = app => {
     const route = express.Router();
@@ -26,6 +26,7 @@ const routerApi = app => {
     route.use('/chat', chat);
     route.use('/proxy', proxy);
     route.use('/email',email);
+    route.use('/upload', upload);
 }
 
 module.exports = routerApi;
