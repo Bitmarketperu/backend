@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const Transactions = new Schema({
+    dni:{
+        type:Number,
+        required:true
+    },
     wallet: {
         type: String,
         required: true,
