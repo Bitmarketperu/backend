@@ -4,9 +4,7 @@ const { Schema } = mongoose;
 
 const Wallet = new Schema({
     wallet: {
-        type: String,
-        required: true,
-        unique: true
+        type: String
     },
     user: {
         type: Schema.ObjectId,
@@ -27,7 +25,8 @@ const Wallet = new Schema({
     },
     dni:{
         type:Number,
-        require:true
+        require:true,
+        unique: true
     },
     phone:{
         type:String,

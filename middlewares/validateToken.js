@@ -13,9 +13,12 @@ const validateToken = (req, res, next)  => {
                 jwt.verify(token, process.env.DATA_TOKEN, (err, decoded) => {
                     if(err) throw 'Error token'
                     req.auth = true;
-                    /* console.log(decoded) */
+                    //el bartolo
+                    req.user = decoded
                     req.user.dni = decoded.dni
                     req.user.level = decoded.level
+                    req.user._id = decoded._id
+
                     next()
                 })
             }else{
