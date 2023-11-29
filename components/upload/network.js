@@ -23,9 +23,10 @@ const deleteFile = async (files) => {
 const storage = multer.diskStorage({
     destination: './files', // Carpeta donde se guardarán los archivos
     filename: (req, file, cb) => {
+        console.log(file.fieldname)
         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
     }
-});
+})
 
 const upload = multer({ storage });
 
@@ -33,6 +34,7 @@ const upload = multer({ storage });
 router.post('/:dni', upload.array('image', 3), async (req, res) => {
     /* const responseController = {message:"success upload"} 
      */
+
     const { dni } = req.params
     const email = 'dni@example.com'
     try {
