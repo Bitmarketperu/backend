@@ -25,7 +25,7 @@ connection();
 routerApi(app);
 
 //Not Found error
-app.use((req, res) => res.status(404).sendFile(path.join( __dirname, './public/404.html')));
+app.use((req, res) => res.status(404).sendFile(path.join( __dirname, './viejoPublic/404.html')));
 
 const port = process.env.PORT || 4532;
 
