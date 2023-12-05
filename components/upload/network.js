@@ -55,6 +55,6 @@ router.post('/:dni', upload.array('image', 3), async (req, res) => {
     } catch (error) {
         response.success(req, res, {message:"ERROR"}, 404);
     }
-});
+})
 
 module.exports = router;

@@ -2,20 +2,20 @@ const store = require('./store');
 const authStore = require('../auth/store')
 const jwt = require('jsonwebtoken');
 
-const auth = ({email, password, name, dni, phone}) => {
-    return new Promise( async (resolve, reject) => {
+const auth = ({ email, password, name, dni, phone }) => {
+    return new Promise(async (resolve, reject) => {
         try {
-            
+
             email = email.toLowerCase().trim();
             let checkUser = await getUser(email);
-   
-            if(checkUser){
+
+            if (checkUser) {
                 resolve({
                     error: "El correo electrónico ya existe!",
                 })
                 return
             }
-           
+
             const newUser = await addUser(email, password, name, dni, phone);
             //crear token 
             const dataUser = jwt.sign({
@@ -23,11 +23,11 @@ const auth = ({email, password, name, dni, phone}) => {
             }, process.env.DATA_TOKEN, { expiresIn: '24h' });
 
             let getNewUser = await getUser(email);  //again
-     
+
             resolve({
-                message: "successfully added",  
+                message: "successfully added",
                 token: dataUser,
-                email:getNewUser.email,
+                email: getNewUser.email,
                 level: getNewUser.level,
                 kyc: getNewUser.kyc,
                 // wallet: checkUser.wallet,
@@ -39,21 +39,21 @@ const auth = ({email, password, name, dni, phone}) => {
         } catch (error) {
             console.log(error)
             reject(error);
-        }        
+        }
     })
 };
 
 const login = (email, password) => {
-    return new Promise( async (resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
 
             email = email.toLowerCase().trim();
             const user = await getUser(email);
-            
-            if(!email) throw 'Usuario no encontrado';
-         
-            if(password !== user.password)  throw 'Contraseña invalida';
-            
+
+            if (!email) throw 'Usuario no encontrado';
+
+            if (password !== user.password) throw 'Contraseña invalida';
+
             const config = await authStore.getConfig()
 
             //crear token 
@@ -64,23 +64,23 @@ const login = (email, password) => {
                 dni: user.dni,
                 level: user.level,
                 kyc: user.kyc,
-                _id:user._id
+                _id: user._id
             }, process.env.DATA_TOKEN, { expiresIn: '24h' });
 
             console.log(user.dni)
-        
-            resolve({ 
-                message: "successfully",  
+
+            resolve({
+                message: "successfully",
                 token,
                 config,
-                email:user.email,
+                email: user.email,
                 level: user.level,
                 kyc: user.kyc,
-                dni:user.dni,
-                name:user.name,
-                phone:user.phone,
-                _id:user._id
-            }); 
+                dni: user.dni,
+                name: user.name,
+                phone: user.phone,
+                _id: user._id
+            });
 
         } catch (error) {
             reject(error);
