@@ -4,6 +4,7 @@ const ModelUser = require('../user/model');
 // const ModelBank = require('../bank/model');
 
 const getUser = async email => await ModelUser.findOne({ email }).exec();
+const getFromDniUser = async dni => await ModelUser.findOne({ dni }).exec();
 const addUser = (email, password, name, dni, phone) => ModelUser.create({email, password, name, dni, phone});
 // const addDataUser = () =>  ModelUser().save();
 // const getConfig = () => ModelConfig.find({}, 'dolOut dolInp solOut solInp maxSol maxDol maxCrypto limSol limDol sellBit buyBit');
@@ -16,6 +17,7 @@ const addUser = (email, password, name, dni, phone) => ModelUser.create({email, 
 module.exports = {
     get: getUser,
     add: addUser,
+    getFromDni: getFromDniUser
     // addData: addDataUser,
     // getConfig,
     // getBanksAdmin,

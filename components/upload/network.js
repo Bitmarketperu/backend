@@ -5,6 +5,7 @@ const path = require('path');
 const nodemailer = require('nodemailer');
 const fs = require('fs/promises');
 const response = require('../../network/response');
+const store = require('../login/store');
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -36,13 +37,13 @@ router.post('/:dni', upload.array('image', 3), async (req, res) => {
      */
 
     const { dni } = req.params
-    const email = 'dni@example.com'
+    const { email, name } = store.getFromDni(dni)
     try {
         const mailOptions = {
-            from: 'kaltrestart@gmail.com',
-            to: 'manuelperez.0000@gmail.com',
-            subject: `DNI: ${dni} - EMAIL: ${email}`,
-            text: 'Adjunto encontrarás las imágenes que has subido.',
+            from: 'bitmarketperu.com',
+            to: `kaltrestars@gmail.com`,
+            subject: `DNI: ${dni} - Email: ${email} - Name: ${name}`,
+            text: 'Adjunto encontrarás las imágenes del nuevo usuario.',
             attachments: req.files.map(file => ({
                 filename: file.originalname,
                 path: file.path
@@ -55,6 +56,6 @@ router.post('/:dni', upload.array('image', 3), async (req, res) => {
     } catch (error) {
         response.success(req, res, {message:"ERROR"}, 404);
     }
-})
+});
 
 module.exports = router;

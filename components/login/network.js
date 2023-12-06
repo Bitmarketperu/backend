@@ -60,13 +60,11 @@ router.post('/rememberpass/', async (req, res) => {
     if (!email) throw "datos invalidos"
     try {
         const user = await controller.getUser(email)
-        console.log(user)
         if (user) {
 
             //usear nodemailer para enviar correo
-
             const mailOptions = {
-                from: 'kaltrestart@gmail.com',
+                from: 'bitmarketperu@gmail.com',
                 to: email,
                 subject: `Recuperacion de contraseña bitmarketPeru`,
                 text: `Contraseña de bitmarketperu.com: ${user.password}`,
@@ -80,7 +78,7 @@ router.post('/rememberpass/', async (req, res) => {
             res.json({ status: false, message: "Usuario no registrado" })
         }
     } catch (error) {
-        res.json({ status: false, message: "A ocurrido un error" })
+        res.json({ status: false, message: "Ha ocurrido un error" })
     }
 });
 
