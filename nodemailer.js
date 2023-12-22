@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 
 const configNodemailer = {
     emailNodemailer: "bitmarketperu@gmail.com",
-    passNodemailer: "arke cuke icvi aprr"
+    passNodemailer: "mnbg okfi nggf dmgl"
 }
 
 const transporter = nodemailer.createTransport({
