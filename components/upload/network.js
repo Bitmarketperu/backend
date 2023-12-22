@@ -28,7 +28,8 @@ router.post('/:dni', upload.array('image', 3), async (req, res) => {
      */
 
     const { dni } = req.params
-    const { email, name } = store.getFromDni(dni)
+    const { email, name } = await store.getFromDni(dni)
+    
     try {
         const mailOptions = {
             from: 'bitmarketperu.com',
