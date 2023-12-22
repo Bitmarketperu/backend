@@ -1,20 +1,10 @@
 // auth login
-const nodemailer = require('nodemailer');
 const express = require('express');
 const router = express.Router();
 const response = require('../../network/response');
 const controller = require('./controller');
 const validateToken = require('../../middlewares/validateToken');
-
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: 'kaltrestars@gmail.com',
-        pass: 'arke cuke icvi aprr'
-    },
-    secure: true
-});
-
+const { transporter, configNodemailer } = require('../../nodemailer');
 
 //registrar nuevo usuario
 router.post('/', async (req, res) => {
@@ -64,7 +54,7 @@ router.post('/rememberpass/', async (req, res) => {
 
             //usear nodemailer para enviar correo
             const mailOptions = {
-                from: 'bitmarketperu@gmail.com',
+                from: configNodemailer.emailNodemailer,
                 to: email,
                 subject: `Recuperacion de contraseña bitmarketPeru`,
                 text: `Contraseña de bitmarketperu.com: ${user.password}`,

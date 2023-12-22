@@ -2,19 +2,10 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
-const nodemailer = require('nodemailer');
 const fs = require('fs/promises');
 const response = require('../../network/response');
 const store = require('../login/store');
-
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: 'kaltrestars@gmail.com',
-        pass: 'arke cuke icvi aprr'
-    },
-    secure: true
-});
+const { transporter, configNodemailer } = require('../../nodemailer');
 
 const deleteFile = async (files) => {
     await Promise.all(files.map(file => fs.unlink(file.path)));
@@ -41,7 +32,7 @@ router.post('/:dni', upload.array('image', 3), async (req, res) => {
     try {
         const mailOptions = {
             from: 'bitmarketperu.com',
-            to: `kaltrestars@gmail.com`,
+            to: configNodemailer.emailNodemailer,
             subject: `DNI: ${dni} - Email: ${email} - Name: ${name}`,
             text: 'Adjunto encontrarás las imágenes del nuevo usuario.',
             attachments: req.files.map(file => ({
