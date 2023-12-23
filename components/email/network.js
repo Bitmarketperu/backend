@@ -22,7 +22,6 @@ const upload = multer({ storage: storage });
 
 const upload = multer({ dest: 'uploads/' })
 route.post('/', upload.array('image', 3), async (req, res) => {
-    console.log(req)
     /* try {
         const responseController = await controller.loadImages(req.files);
         response.success(req, res, responseController, 200);

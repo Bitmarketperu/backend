@@ -4,7 +4,6 @@ const schema =  require('../../middlewares/validateUser');
 
 const getAll = (level) => {
 
-    console.log('user level: ===>',level)
     return new Promise( async (resolve, reject) => {
         try {
             

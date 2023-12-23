@@ -71,7 +71,11 @@ const Transactions = new Schema({
     politico: { 
         type: String,
         Default: ''
-    }
+    },
+    user:{
+        type: Schema.ObjectId,
+        ref: 'User',
+    },
 });
 
 module.exports = mongoose.model('Transactions', Transactions);

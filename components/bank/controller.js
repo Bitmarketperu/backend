@@ -1,14 +1,15 @@
 const store = require('./store');
 const schema =  require('../../middlewares/validateBank');
 
-const getBank = ( dni, dniToken ) => {
+// const getBank = ( dni, dniToken ) => {
+const getBank = ( user  ) => {
     return new Promise( async (resolve, reject) => {
         try {
            /*  console.log('DNI:',dni)
             console.log('DNITOKEN:',dniToken) */
 
-            if(dni!= dniToken) throw "user no authorization";
-            const banks = await store.getBank(dni.toLowerCase());
+            // if(dni!= dniToken) throw "user no authorization";
+            const banks = await store.getBank(user);
             
             resolve(banks);
 
@@ -19,11 +20,10 @@ const getBank = ( dni, dniToken ) => {
     })
 };
 
-const addBank = ( dni, name, titular, number, type, money, dniToken ) => {
+const addBank = ( dni, name, titular, number, type, money, dniToken, user ) => {
     return new Promise( async (resolve, reject) => {
         try {
             if(dniToken != dni) {
-                console.log("Usuario no autorizado")
                 throw "User no authorization";
             }
 
@@ -33,7 +33,7 @@ const addBank = ( dni, name, titular, number, type, money, dniToken ) => {
             const {error} = schema.validate({titular, number}); 
             if (error) throw "Error en los datos del formulario";
 
-            const newBank = await store.add( {dni, name, titular, number, type, money} );
+            const newBank = await store.add( {dni, name, titular, number, type, money, user} );
      
             resolve({ 
                 message: "successfully added",  
@@ -56,7 +56,6 @@ const setBank = ( dni, dniToken, idBank ) => {
             resolve("Successfully Delete")
 
         } catch (error) {
-            console.log('No se pudo eliminar el banco')
             console.log(error)
             reject(error)
         }        

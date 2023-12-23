@@ -54,7 +54,13 @@ const login = (email, password) => {
 
             if (password !== user.password) throw 'Contraseña invalida';
 
-            const config = await authStore.getConfig()
+            const config = await authStore.getConfig();
+            const userAdmin = await store.getUserAdmin();
+  
+            let banksAdmin = [];
+            if(userAdmin){
+                banksAdmin = await store.getBanksAdmin(userAdmin._id);
+            }
 
             //crear token 
             const token = jwt.sign({
@@ -64,10 +70,9 @@ const login = (email, password) => {
                 dni: user.dni,
                 level: user.level,
                 kyc: user.kyc,
-                _id: user._id
+                _id: user._id,
+                banksAdmin
             }, process.env.DATA_TOKEN, { expiresIn: '24h' });
-
-            console.log(user.dni)
 
             resolve({
                 message: "successfully",
@@ -79,7 +84,8 @@ const login = (email, password) => {
                 dni: user.dni,
                 name: user.name,
                 phone: user.phone,
-                _id: user._id
+                _id: user._id,
+                banksAdmin
             });
 
         } catch (error) {

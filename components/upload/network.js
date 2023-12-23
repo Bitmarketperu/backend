@@ -15,7 +15,6 @@ const deleteFile = async (files) => {
 const storage = multer.diskStorage({
     destination: './files', // Carpeta donde se guardarán los archivos
     filename: (req, file, cb) => {
-        console.log(file.fieldname)
         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
     }
 })

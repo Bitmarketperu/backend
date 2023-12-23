@@ -2,8 +2,6 @@ const nodemailer = require("nodemailer")
 
 const loadImages = (files) => {
 
-    console.log(files)
-
     /* const { originalname, path } = req.file
     const pass = process.env.APPLICATION_PASS_GMAIL_MANUEL
     const user = 'manuelperez.0000@gmail.com'

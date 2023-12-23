@@ -17,7 +17,6 @@ router.get('/:idTransaction', async (req, res) => {
 
 router.post('/', async (req, res) => {
     const { idTransaction, description, idUser } = req.body;
-    console.log(req.body)
     try {
         if(!idTransaction || !description || !idUser) throw "data invalida";
         const responseController = await controller.save( idTransaction, description, idUser );

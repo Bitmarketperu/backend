@@ -43,11 +43,11 @@ router.get('/:desde/:hasta', async (req, res) => {
 //ADD TRANSLATIONS USER
 router.post('/', async (req, res) => {
 
-    const { dni, wallet, id, amountSend, amountReceive, moneySend, moneyReceive, network, status, bankAdmin, bank, reciveUser, reciveNetwork, reciveMethod, payMethod, origen, politico } = req.body;
+    const { dni, wallet, id, amountSend, amountReceive, moneySend, moneyReceive, network, status, bankAdmin, bank, reciveUser, reciveNetwork, reciveMethod, payMethod, origen, politico, userIdTransaction } = req.body;
 
     try {
-        if (!dni || !id || !amountSend || !amountReceive || !moneySend || !moneyReceive || !network || !status || !bankAdmin || !bank || !reciveUser || !reciveNetwork || !reciveMethod || !payMethod) throw "data invalida";
-        const responseController = await controller.addTransaction(dni, wallet, id, amountSend, amountReceive, moneySend, moneyReceive, network, status, bankAdmin, bank, reciveUser, reciveNetwork, reciveMethod, payMethod, origen, politico);
+        if (!dni || !id || !amountSend || !amountReceive || !moneySend || !moneyReceive || !network || !status || !bankAdmin || !bank || !reciveUser || !reciveNetwork || !reciveMethod || !payMethod || !userIdTransaction) throw "data invalida";
+        const responseController = await controller.addTransaction(dni, wallet, id, amountSend, amountReceive, moneySend, moneyReceive, network, status, bankAdmin, bank, reciveUser, reciveNetwork, reciveMethod, payMethod, origen, politico, userIdTransaction);
         response.success(req, res, responseController, 200);
     } catch (error) {
         console.log(error)

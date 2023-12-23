@@ -17,7 +17,7 @@ const socket = require('./socket');
 socket.connect(server);
 
 //zona horaria
-// process.env.TZ = "America/Lima";
+process.env.TZ = "America/Lima";
 // console.log(`test date ${new Date()}`);
 
 connection();

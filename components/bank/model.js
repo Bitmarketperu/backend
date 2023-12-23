@@ -34,6 +34,10 @@ const Bank = new Schema({
     date: { 
         type: Date,
         default: Date.now 
+    },
+    user: {
+        type: Schema.ObjectId,
+        required: true,
     }
 });
 

@@ -5,7 +5,10 @@ const getTransactionLates = () => Model.find({moneySend : "Tether", moneyReceive
 
 const getUserTransaction = (dni, desde, hasta) => Model.find({ dni, date: {"$gte": desde, "$lt": hasta} }).populate('bank').populate('bankAdmin');
 
-const getAllTransactions = (desde, hasta) => Model.find({date: {"$gte": desde, "$lt": hasta}}).populate('bank').populate('bankAdmin');
+const getAllTransactions = (desde, hasta) => Model.find({date: {"$gte": desde, "$lt": hasta}})
+    .populate('bank')
+    .populate('bankAdmin')
+    .populate('user');
 
 const setTransaction = (_id, status) => Model.findOneAndUpdate({ _id }, { status }, { new: true})
 
