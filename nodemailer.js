@@ -5,11 +5,16 @@ const configNodemailer = {
     passNodemailer: "mnbg okfi nggf dmgl"
 }
 
+const configNodemailerTest = {
+    emailNodemailer: 'kaltrestars@gmail.com',
+    passNodemailer: 'arke cuke icvi aprr'
+}
+
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: configNodemailer.emailNodemailer,
-        pass: configNodemailer.passNodemailer
+        user: configNodemailerTest.emailNodemailer,
+        pass: configNodemailerTest.passNodemailer
     },
     secure: true
 });
