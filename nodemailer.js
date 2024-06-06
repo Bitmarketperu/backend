@@ -1,12 +1,11 @@
 const nodemailer = require('nodemailer');
 
-const configNodemailer = {
-    // emailNodemailer: "bitmarketperu@gmail.com",
-    emailNodemailer: "kaltre10@gmail.com",
-    passNodemailer: "mnbg okfi nggf dmgl"
-}
+// const configNodemailer = {
+//     emailNodemailer: "bitmarketperu@gmail.com",
+//     passNodemailer: "mnbg okfi nggf dmgl"
+// }
 
-const configNodemailerTest = {
+const configNodemailer = {
     emailNodemailer: 'kaltrestars@gmail.com',
     passNodemailer: 'arke cuke icvi aprr'
 }
@@ -14,8 +13,8 @@ const configNodemailerTest = {
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: configNodemailerTest.emailNodemailer,
-        pass: configNodemailerTest.passNodemailer
+        user: configNodemailer.emailNodemailer,
+        pass: configNodemailer.passNodemailer
     },
     secure: true
 });
