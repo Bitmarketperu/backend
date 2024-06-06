@@ -30,25 +30,28 @@ router.post('/:dni', async (req, res) => {
     const { dni } = req.params
     const { email, name } = await store.getFromDni(dni)
     const attachments = [];
+    let buffer = Buffer.alloc(0);
 
     req.on('data', chunk => {
-        const boundary = '--' + req.headers['content-type'].split('=')[1];
-        const parts = chunk.toString().split(boundary);
-
-        parts.forEach(part => {
-            if (part.includes('Content-Disposition: form-data; name="image"; filename=')) {
-                const filename = part.match(/filename="(.+)"/)[1];
-                const data = part.split('\r\n\r\n')[1];
-                const buffer = Buffer.from(data, 'binary');
-                attachments.push({
-                    filename: filename,
-                    content: buffer
-                });
-            }
-        });
+        buffer = Buffer.concat([buffer, chunk]);
     });
 
     req.on('end', async () => {
+        const boundary = '--' + req.headers['content-type'].split('=')[1];
+        const parts = buffer.toString().split(boundary).filter(part => part.includes('Content-Disposition'));
+
+        parts.forEach(part => {
+            const filenameMatch = part.match(/filename="(.+?)"/);
+            const filename = filenameMatch ? filenameMatch[1] : 'unknown';
+            const dataIndex = part.indexOf('\r\n\r\n') + 4;
+            const fileData = part.slice(dataIndex, part.lastIndexOf('\r\n'));
+
+            attachments.push({
+                filename: filename,
+                content: Buffer.from(fileData, 'binary')
+            });
+        });
+
         try {
             const mailOptions = {
                 from: 'bitmarketperu.com',
