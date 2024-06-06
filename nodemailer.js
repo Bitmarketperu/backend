@@ -1,7 +1,8 @@
 const nodemailer = require('nodemailer');
 
 const configNodemailer = {
-    emailNodemailer: "bitmarketperu@gmail.com",
+    // emailNodemailer: "bitmarketperu@gmail.com",
+    emailNodemailer: "kaltre10@gmail.com",
     passNodemailer: "mnbg okfi nggf dmgl"
 }
 

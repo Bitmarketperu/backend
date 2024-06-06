@@ -5,6 +5,7 @@ const router = express.Router();
 // const fs = require('fs/promises');
 const response = require('../../network/response');
 const store = require('../login/store');
+const formidable = require('formidable');
 const { transporter, configNodemailer } = require('../../nodemailer');
 
 // const deleteFile = async (files) => {
@@ -29,40 +30,42 @@ router.post('/:dni', async (req, res) => {
 
     const { dni } = req.params
     const { email, name } = await store.getFromDni(dni)
-
-    let images;
-
-    try {
-        images = req.body.images;
-        if (!images || images.length !== 3) {
-            throw new Error('Se requieren exactamente 3 imágenes.');
+    const form = formidable({ multiples: true });
+       
+    form.parse(req, async (err, fields, files) => {
+        if (err) {
+            console.error('Error parsing the files', err);
+            return response.error(req, res, { message: "ERROR", error: err.message }, 400);
         }
-    } catch (error) {
-        return response.error(req, res, { message: "ERROR", error: error.message }, 400);
-    }
 
-    const attachments = images.map((image, index) => ({
-        filename: `image${index + 1}.jpg`,
-        content: image.split(';base64,').pop(),
-        encoding: 'base64'
-    }));
+        try {
+            const attachments = [];
 
-    try {
-        const mailOptions = {
-            from: 'bitmarketperu.com',
-            to: configNodemailer.emailNodemailer,
-            subject: `DNI: ${dni} - Email: ${email} - Name: ${name}`,
-            text: 'Adjunto encontrarás las imágenes del nuevo usuario.',
-            attachments: attachments
-        };
+            for (const fileKey in files) {
+                const file = files[fileKey];
+                const fileData = await fs.promises.readFile(file.filepath);
+                attachments.push({
+                    filename: file.originalFilename,
+                    content: fileData
+                });
+            }
 
-        await transporter.sendMail(mailOptions);
-        response.success(req, res, { message: "SUCCESS" }, 200);
-    } catch (error) {
-        response.error(req, res, { message: "ERROR", error: error.message }, 500);
-    }
+            const mailOptions = {
+                from: 'bitmarketperu.com',
+                to: configNodemailer.emailNodemailer,
+                subject: `DNI: ${dni} - Email: ${email} - Name: ${name}`,
+                text: 'Adjunto encontrarás las imágenes del nuevo usuario.',
+                attachments: attachments
+            };
 
-   
+            await transporter.sendMail(mailOptions);
+            response.success(req, res, { message: "SUCCESS" }, 200);
+        } catch (error) {
+            console.error('Error sending email', error);
+            response.error(req, res, { message: "ERROR", error: error.message }, 500);
+        }
+    });
+    response.success(req, res, { message: "SUCCESS" }, 200);
     // try {
     //     const mailOptions = {
     //         from: 'bitmarketperu.com',
