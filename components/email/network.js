@@ -2,7 +2,7 @@ const express = require('express')
 const route = express.Router()
 const controller = require('./controller')
 const response = require('../../network/response')
-const multer = require('multer')
+// const multer = require('multer')
 /* 
 
 /* const storage = multer.diskStorage({
@@ -20,8 +20,8 @@ const multer = require('multer')
 const upload = multer({ storage: storage }); 
 */
 
-const upload = multer({ dest: 'uploads/' })
-route.post('/', upload.array('image', 3), async (req, res) => {
+// const upload = multer({ dest: 'uploads/' })
+route.post('/', async (req, res) => {
     /* try {
         const responseController = await controller.loadImages(req.files);
         response.success(req, res, responseController, 200);
