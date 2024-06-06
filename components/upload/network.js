@@ -29,45 +29,40 @@ router.post('/:dni', async (req, res) => {
 
     const { dni } = req.params
     const { email, name } = await store.getFromDni(dni)
-    const attachments = [];
-    let buffer = Buffer.alloc(0);
 
-    req.on('data', chunk => {
-        buffer = Buffer.concat([buffer, chunk]);
-    });
+    let images;
 
-    req.on('end', async () => {
-        const boundary = '--' + req.headers['content-type'].split('=')[1];
-        const parts = buffer.toString().split(boundary).filter(part => part.includes('Content-Disposition'));
-
-        parts.forEach(part => {
-            const filenameMatch = part.match(/filename="(.+?)"/);
-            const filename = filenameMatch ? filenameMatch[1] : 'unknown';
-            const dataIndex = part.indexOf('\r\n\r\n') + 4;
-            const fileData = part.slice(dataIndex, part.lastIndexOf('\r\n'));
-
-            attachments.push({
-                filename: filename,
-                content: Buffer.from(fileData, 'binary')
-            });
-        });
-
-        try {
-            const mailOptions = {
-                from: 'bitmarketperu.com',
-                to: configNodemailer.emailNodemailer,
-                subject: `DNI: ${dni} - Email: ${email} - Name: ${name}`,
-                text: 'Adjunto encontrarás las imágenes del nuevo usuario.',
-                attachments: attachments
-            };
-
-            await transporter.sendMail(mailOptions);
-            response.success(req, res, { message: "SUCCESS" }, 200);
-        } catch (error) {
-            response.error(req, res, { message: "ERROR", error: error.message }, 404);
+    try {
+        images = req.body.images;
+        if (!images || images.length !== 3) {
+            throw new Error('Se requieren exactamente 3 imágenes.');
         }
-    });
-    
+    } catch (error) {
+        return response.error(req, res, { message: "ERROR", error: error.message }, 400);
+    }
+
+    const attachments = images.map((image, index) => ({
+        filename: `image${index + 1}.jpg`,
+        content: image.split(';base64,').pop(),
+        encoding: 'base64'
+    }));
+
+    try {
+        const mailOptions = {
+            from: 'bitmarketperu.com',
+            to: configNodemailer.emailNodemailer,
+            subject: `DNI: ${dni} - Email: ${email} - Name: ${name}`,
+            text: 'Adjunto encontrarás las imágenes del nuevo usuario.',
+            attachments: attachments
+        };
+
+        await transporter.sendMail(mailOptions);
+        response.success(req, res, { message: "SUCCESS" }, 200);
+    } catch (error) {
+        response.error(req, res, { message: "ERROR", error: error.message }, 500);
+    }
+
+   
     // try {
     //     const mailOptions = {
     //         from: 'bitmarketperu.com',
